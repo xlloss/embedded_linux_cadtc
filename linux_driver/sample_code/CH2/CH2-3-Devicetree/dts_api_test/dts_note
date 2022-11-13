@@ -1,0 +1,4 @@
+platdrvsample:platdrvsample {
+	status = "okay";
+	compatible = "sample-test,platform-driver";
+};

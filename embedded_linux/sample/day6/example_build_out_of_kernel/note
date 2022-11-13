@@ -1,0 +1,15 @@
+[ Host ]
+1.	# cd /home/cadtc/tiny4412/experiment/day6/example_build_out_of_kernel
+
+2.	# make
+
+3.	# cp leds-tiny4412_out_of_kernel.ko /home/cadtc/tiny4412/experiment/root_mkfs/lib/modules/3.5.0-FriendlyARM/kernel/drivers/char/
+
+
+[ Target ]
+4. 	# depmod -n
+		# depmod
+
+5.	# modprobe leds-tiny4412_out_of_kernel
+
+6.	# modprobe -r leds-tiny4412_out_of_kernel

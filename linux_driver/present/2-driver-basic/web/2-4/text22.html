@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 23</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text21.html">Back</a> <a href="text23.html">Continue</a> <a href="text28.html">Last page</a> <a href="2-4_Devicetree.html">Overview</a> <a href="img22.html">Graphics</a></center><br>
+<h1>compatible</h1>
+<p>static const struct of_device_id s3c24xx_i2c_match[] = {</p>
+<p>	{ .compatible = &quot;samsung,s3c2410-i2c&quot;, .data = (void *)0 },</p>
+<p>	<b>{ .compatible = &quot;samsung,s3c2440-i2c&quot;, .data = (void *)QUIRK_S3C2440 },</b></p>
+<p>	{ .compatible = &quot;samsung,s3c2440-hdmiphy-i2c&quot;,</p>
+<p>	  .data = (void *)(QUIRK_S3C2440 | QUIRK_HDMIPHY | QUIRK_NO_GPIO) },</p>
+<p>	{ .compatible = &quot;samsung,exynos5-sata-phy-i2c&quot;,</p>
+<p>	  .data = (void *)(QUIRK_S3C2440 | QUIRK_POLL | QUIRK_NO_GPIO) },</p>
+<p>	{},</p>
+<p>};</p>
+<p>MODULE_DEVICE_TABLE(of, s3c24xx_i2c_match);</p>
+<p>drivers/i2c/busses/i2c-s3c2410.c</p>
+<p>static struct platform_driver s3c24xx_i2c_driver = {</p>
+<p>	<b>.probe		= s3c24xx_i2c_probe,</b></p>
+<p>	.remove		= s3c24xx_i2c_remove,</p>
+<p>	.id_table	= s3c24xx_driver_ids,</p>
+<p>	.driver		= {</p>
+<p>		.name	= &quot;s3c-i2c&quot;,</p>
+<p>		.pm	= S3C24XX_DEV_PM_OPS,</p>
+<p>		<b>.of_match_table = of_match_ptr(s3c24xx_i2c_match),</b></p>
+<p>	},</p>
+<p>};</p>
+<p>Probe will be run when a matching</p>
+<p>compatible string is found</p>
+</body>
+</html>

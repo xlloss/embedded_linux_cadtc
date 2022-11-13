@@ -1,0 +1,59 @@
+================================================
+			exercise nm:
+================================================
+	x86-PC
+		1. #make
+		2. #nm -help
+		3. #nm main.o
+		4. #nm -a -l main.o
+		5. #nm -a -A main.o
+
+	ARM
+		1. #make
+		2. #arm-none-linux-gnueabi-nm -help
+		3. #arm-none-linux-gnueabi-nm main.o
+		4. #arm-none-linux-gnueabi-nm -a -l main.o
+		5. #arm-none-linux-gnueabi-nm -a -A main.o
+
+	A :  Global absolute symbol.
+	a :  Local absolute symbol.
+	B : Global bss symbol.
+	b : Local bss symbol.
+	D : Global data symbol.
+	d : Local data symbol.
+	f : Source file name symbol.
+	L : Global thread-local symbol (TLS).
+	l : Static thread-local symbol (TLS).
+	T : Global text symbol.
+	t : Local text symbol.
+	U : Undefined symbol.
+
+================================================
+			objdump:
+================================================
+	x86-PC
+		1. #make
+		2. #objdump -help
+		3. #objdump -d main.o
+		4. #objdump -t main.o
+
+
+	ARM
+		1. #make
+		2. #arm-none-linux-gnueabi-objdump -help
+		3. #arm-none-linux-gnueabi-objdump -d main.o
+		4. #arm-none-linux-gnueabi-objdump -t main.o
+
+
+================================================
+			strip:
+================================================
+	x86-PC
+		#ls -l
+		#strip exerise
+		#ls -l
+
+	ARM
+		#ls -l
+		#arm-none-linux-gnueabi-strip exerise
+		#ls -l

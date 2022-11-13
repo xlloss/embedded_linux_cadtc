@@ -1,0 +1,4 @@
+insmod /tmp/waitevent.ko 
+mknod /dev/waitevent c 250 0
+/tmp/waitevent_r &
+/tmp/waitevent_w &

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>get_free_page and Friends</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text10.html">Back</a> <a href="text12.html">Continue</a> <a href="text20.html">Last page</a> <a href="3-1_Allocating_Memory.html">Overview</a> <a href="img11.html">Graphics</a></center><br>
+<h1><b>get_free_page</b> and Friends</h1>
+<ul>
+<li>For allocating <b>big chunks of memory</b>, it is more efficient to use a <b>page-oriented</b> allocator</li>
+<li>To allocate pages, call</li>
+<li><b>/* returns a pointer to a zeroed page */</b></li>
+<li><b>get_zeroed_page(unsigned int flags);</b></li>
+<li><b></b></li>
+<li><b>/* does not clear the page */</b></li>
+<li><b>__get_free_page(unsigned int flags);</b></li>
+<li><b></b></li>
+<li><b>/* allocates multiple physically contiguous pages */ </b></li>
+<li><b>__get_free_pages(unsigned int flags, unsigned int order);</b></li>
+<li><b></b></li>
+</ul>
+</body>
+</html>

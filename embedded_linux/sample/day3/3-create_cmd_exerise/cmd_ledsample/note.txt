@@ -1,0 +1,21 @@
+1.	understand cmd_slash_led.c
+
+2.	add below to [ uboot_tiny4412/common/Makefile ]
+
+		a.	手動修改
+			請參考 ~/tiny4412/experiment/day3/cmd_helloworld
+
+		
+3.	add below to [ uboot_tiny4412/include/configs/tiny4412.h ]
+
+		a.	手動修改
+			請參考 ~/tiny4412/experiment/day3/cmd_helloworld
+
+4.	add cmd_helloworld.c
+
+		a.	手動修改
+			請參考 ~/tiny4412/experiment/day3/Day-3-U-Boot-exerise/exerise3/cmd_helloworld
+
+5.	re-build u-boot
+
+6.	update u-boot to eMMC

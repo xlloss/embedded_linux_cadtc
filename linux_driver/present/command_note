@@ -1,0 +1,75 @@
+Search File in Directory
+$ find ./ -name “*.pdf”
+$ find /home/cadtc -name “*.jpg”
+
+List file
+$ ls -l
+$ ls -la
+
+Copy a File
+$ cp ./a.test /home/cadtc/
+$ cp ./a.test /home/cadtc/b.test
+
+Move a File or Rename
+$ mv ./a.test /home/cadtc/
+$ mv ./a.test  ./b.test
+
+Find a File that include the string
+$ find ./linux/driver -name “*.c” | grep “LED”
+
+
+SSH Copy  a File To Remote
+$ scp ./a.test  root@192.168.0.100:/home/root
+
+
+SSH Login To Remote
+$ ssh  root@192.168.0.100
+
+
+Install a kernel module
+$ insmod hello_world.ko
+$ modprobe hello_world.ko
+
+Remove a kernel module
+$ rmmod hello_world
+$ modprobe -r hello_world
+
+List kernel module live in kernel
+$ lsmod
+
+List mounted disk status
+$ lsblk
+
+
+Fdisk disk
+$ sudo fdisk /dev/sdX
+
+
+Format disk 
+$ sudo mkfs.ext4 /dev/sdx1
+
+
+Mount disk 
+$ mkdir /tmp/sdx_mount
+$ mount /dev/sdX1 /tmp/sdx_mount
+
+Password Modify 
+$ passwd
+
+
+Remove file or directory 
+$ rm  /home/cadtc/test_file.txt
+
+$ mkdir /home/cadtc/test_folder
+$ rm  -r /home/cadtc/test_folder
+
+Check Linux System Log 
+$ dmesg
+$ dmesg | tail
+
+Extract tar.bz2 file
+$ tar -xvjf  /home/cadtc/test.tar.bz2 -C /home/cadtc/test_folder
+
+
+Extract tar.gz file
+$ tar -xvzf  /home/cadtc/test.tar.gz -C /home/cadtc/test_folder

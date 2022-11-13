@@ -1,0 +1,4 @@
+0x00000000	bmp085_regmap_config	/home/slash/work/for_cadtc/data_src/bmp085/bmp085	EXPORT_SYMBOL_GPL
+0x00000000	bmp085_remove	/home/slash/work/for_cadtc/data_src/bmp085/bmp085	EXPORT_SYMBOL_GPL
+0x00000000	bmp085_probe	/home/slash/work/for_cadtc/data_src/bmp085/bmp085	EXPORT_SYMBOL_GPL
+0x00000000	bmp085_detect	/home/slash/work/for_cadtc/data_src/bmp085/bmp085	EXPORT_SYMBOL_GPL

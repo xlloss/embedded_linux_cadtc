@@ -1,0 +1,31 @@
+gpio-keys {
+	compatible = "gpio-keys-polled";
+	poll-interval = <100>;
+	status = "okay";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&key_0 &key_1>;
+
+	user_k1 {
+		label = "User Push Button K1";
+		linux,code = <KEY_RED>;
+		gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
+	};
+
+	user_k2 {
+		label = "User Push Button K2";
+		linux,code = <KEY_GREEN>;
+		gpios = <&gpio4 RK_PD2 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&pinctrl {
+	btn {
+		key_0: key_0 {
+			rockchip,pins = <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+		key_1: key_1 {
+			rockchip,pins = <4 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};

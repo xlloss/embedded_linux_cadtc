@@ -1,0 +1,13 @@
+1.
+   $ gst-launch-1.0 playbin uri=file:///oem/SampleVideo_1280x720_5mb.mp4
+
+2. Play a H.264 video
+   $ gst-launch-1.0 filesrc location=/oem/200frames_count.h264 ! \
+decodebin name=dec ! videoconvert ! kmssink
+
+3. Play a MP3
+   $ gst-launch-1.0 filesrc location="oem/piano2-CoolEdit.mp3" ! \
+mpegaudioparse ! \
+avdec_mp3 ! \
+audioconvert ! \
+alsasink device=hw:0  

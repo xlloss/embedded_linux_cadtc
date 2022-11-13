@@ -1,0 +1,33 @@
+.
+├── sample-generic
+│   ├── example-1-no-makefile
+│   ├── example-2-makefile
+│   │   └── src
+│   ├── example-3-makefile-multifile
+│   │   └── use_src_folder
+│   │       └── src
+│   ├── example-4-automake
+│   │   ├── autom4te.cache
+│   │   └── src
+│   │       └── inc
+│   └── example-5-automake-multifile
+│       ├── autom4te.cache
+│       └── src
+│           └── inc
+└── sample-use-lib
+    ├── example-1-makefile-multifile
+    └── example-2-automake-multifile
+        ├── autom4te.cache
+        └── src
+            ├── inc
+            └── lib
+
+
+
+sample-generic : a generic build sample
+                 example-1 ~ example-3 use easy Makefile
+                 example-4 ~ example-5 use auto-make and auto-configure to build
+
+
+sample-use-lib : thease are about building a library to use
+

@@ -1,0 +1,47 @@
+========================================================================
+					Write kernel to eMMC
+========================================================================
+
+
+1.	understand  "movi" command
+
+	# help movi
+		movi - movi	- sd/mmc r/w sub system for SMDK board
+		
+		Usage:
+		movi init - Initialize moviNAND and show card info
+		movi read zero {fwbl1 | u-boot} {device_number} {addr} - Read data from sd/mmc
+		movi write zero {fwbl1 | u-boot} {device_number} {addr} - Read data from sd/mmc
+		movi read {u-boot | kernel} {device_number} {addr} - Read data from sd/mmc
+		movi write {fwbl1 | u-boot | kernel} {device_number} {addr} - Write data to sd/mmc
+		movi read rootfs {device_number} {addr} [bytes(hex)] - Read rootfs data from sd/mmc by size
+		movi write rootfs {device_number} {addr} [bytes(hex)] - Write rootfs data to sd/mmc by size
+		movi read {sector#} {device_number} {bytes(hex)} {addr} - instead of this, you can use "mmc read"
+		movi write {sector#} {device_number} {bytes(hex)} {addr} - instead of this, you can use "mmc write"
+
+2.	start update kernel to eMMC
+
+	*******************************************
+		if you use sd		 boot 	"mmc_device" = 1
+		if you use emmc  boot 	"mmc_device" = 0
+	*******************************************
+	
+	sd boot -> 	#setenv mmc_device 1
+	eMMC 		->	#setenv mmc_device 0
+
+	[ Hots ]
+		2.	sudo dnw zImage (from kernel or pr-build)
+	
+	[ Target ]
+		1.	dnw
+		3.
+			movi write kernel $mmc_device 0xc0000000
+	
+		4.
+			[ boot kernel ]
+			movi read kernel $mmc_device 0xc0008000
+			bootm 0xc0008000
+
+
+3.	create change above step to u-boot script
+	請參考 tiny4412/experiment/day3/4-script_exerise

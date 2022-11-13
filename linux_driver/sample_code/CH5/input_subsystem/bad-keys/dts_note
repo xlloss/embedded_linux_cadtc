@@ -1,0 +1,20 @@
+irq-gpio-sample {
+	status = "okay";
+	compatible = "gpiokey,irq-sample";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&key_0 &key_1>;
+	key0-gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
+	key1-gpios = <&gpio4 RK_PD2 GPIO_ACTIVE_HIGH>;
+};
+
+&pinctrl {
+	btn {
+		key_0: key_0 {
+			rockchip,pins = <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+		key_1: key_1 {
+			rockchip,pins = <4 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};

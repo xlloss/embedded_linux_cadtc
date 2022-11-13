@@ -1,0 +1,25 @@
+prefix	= /usr/local
+bindir	= /usr/local/bin
+mandir	= /usr/local/man
+infodir	= /usr/local/info
+libungif check
+  1st:
+/usr/bin/ld: cannot find -lungif
+collect2: ld returned 1 exit status
+  2nd: -lX11 -L/usr/X11R6/lib
+/usr/bin/ld: cannot find -lungif
+collect2: ld returned 1 exit status
+libungif: no
+/usr/bin/ld: cannot find -ljpeg
+collect2: ld returned 1 exit status
+libjpeg: no
+libpng: yes
+bmp: yes
+fb: /dev/fb0
+LIBS	= -lpng 
+#define IDSTRING "fbv 1.0b, s-tech"
+#define DEFAULT_FRAMEBUFFER "/dev/fb0"
+#define FBV_SUPPORT_GIF
+#define FBV_SUPPORT_JPEG
+#define FBV_SUPPORT_PNG
+#define FBV_SUPPORT_BMP

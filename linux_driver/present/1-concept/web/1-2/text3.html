@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 4</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text2.html">Back</a> <a href="text4.html">Continue</a> <a href="text5.html">Last page</a> <a href="1-2_NanoPi_M4.html">Overview</a> <a href="img3.html">Graphics</a></center><br>
+<h1>Reference - 3</h1>
+<p>flash=mmc,1:loader:idb:0x8000,0x280000:idbloader.img;</p>
+<p>flash=mmc,1:env:env:0x3F8000,0x8000;</p>
+<p>flash=mmc,1:parm:parm:0x400000,0x0400000:param4sd.txt;</p>
+<p><b>flash=mmc,1:uboot:raw:0x800000,0x0400000:uboot.img;</b></p>
+<p>flash=mmc,1:trust:raw:0xC00000,0x0400000:trust.img;</p>
+<p>flash=mmc,1:misc:raw:0x1000000,0x0400000;</p>
+<p><b>flash=mmc,1:resc:raw:0x1400000,0x0C00000:resource.img;</b></p>
+<p><b>flash=mmc,1:kern:raw:0x2000000,0x2000000:kernel.img;</b></p>
+<p>flash=mmc,1:boot:raw:0x4000000,0x2000000:boot.img;</p>
+<p><b>flash=mmc,1:rootfs:ext4:0x6000000,&lt;ROOTFS_PARTITION_SIZE&gt;:rootfs.img;</b></p>
+<p>flash=mmc,1:userdata:ext4:&lt;USERDATA_PARTITION_ADDR&gt;,0x0:userdata.img;</p>
+<p>flash=&lt;device&gt;.&lt;dev no&gt;:&lt;partition&gt;:&lt;fstype&gt;:&lt;start&gt;,&lt;length&gt;[:file name];</p>
+<ul>
+<li>Image partition map</li>
+</ul>
+</body>
+</html>

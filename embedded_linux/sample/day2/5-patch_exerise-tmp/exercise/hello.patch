@@ -1,0 +1,11 @@
+--- hello_1.c	2016-11-16 15:41:30.038564000 +0800
++++ hello_2.c	2016-11-16 15:41:30.038564000 +0800
+@@ -1,6 +1,7 @@
+ #include <stdio.h> 
+ 
+ int main(int argv, char *argc) {
+-	printf("Hello... I Love You!\n");
++	printf("Hello... I love You!\n");
++	printf("Hello... Do you marry with me!\n");
+ 	return 0;
+ }

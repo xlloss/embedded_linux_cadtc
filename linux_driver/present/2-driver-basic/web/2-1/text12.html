@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 13</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text11.html">Back</a> <a href="text13.html">Continue</a> <a href="text60.html">Last page</a> <a href="2-1_Char_Drivers.html">Overview</a> <a href="img12.html">Graphics</a></center><br>
+<h1><font color="#330033">Char Device Registration</font></h1>
+<ul>
+<li>Need to allocate <b>Major</b> and <b>Minor</b> number to represent char devices</li>
+<li>Need to allocate struct cdev to represent char devices</li>
+</ul>
+<p><b>#include &lt;linux/cdev.h&gt;</b></p>
+<p><b>/* first way */</b></p>
+<p><b>struct cdev *my_cdev = <font color="#FF0000">cdev_alloc()</font>;</b></p>
+<p><b><font color="#CC0000">my_cdev-&gt;ops = &amp;my_fops;</b></font></p>
+<p><b></b></p>
+<p><b>/* second way, for embedded cdev structure, call this function*/</b></p>
+<p><b>struct cdev my_cdev;</b></p>
+<p><b>void <font color="#FF0000">cdev_init</font>(&amp;my_cdev, <font color="#CC0000">&amp;my_fops</font>);</b></p>
+<p>alloc_chrdev_region(&amp;dev, base_minor, num_of_dev, DRIVER_NAME);</p>
+<p>dev_t dev;</p>
+</body>
+</html>

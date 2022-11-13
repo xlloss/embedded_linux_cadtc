@@ -1,0 +1,43 @@
+b.
+	[ Host ]
+		1.	# cd ~/tiny4412/Day6/module/example_char_dev
+			# cp ./led_driver/leds-tiny4412-char.c ~/tiny4412/Day4/linux_3.5.0_tiny4412/drivers/leds
+			
+		2.
+			compare file
+			a. Kconfig file
+				kdiff3 ./Kconfig  /home/cadtc/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/drivers/leds/Kconfig
+
+			# geany /home/xlloss/tiny4412/Day4/linux_3.5.0_tiny4412/drivers/leds/Kconfig
+
+			/* add below */
+			comment "LED drivers"
++			config LEDS_SLASH_CHAR_DEV_TEST
++				tristate "LEDS_SLASH_CHAR_DEV_TEST"
++				depends on LEDS_CLASS
++				help
++				LEDS_SLASH_CHAR_DEV_TEST for example_char_dev
+
+
+		3.	# geany /home/xlloss/tiny4412/Day4/linux_3.5.0_tiny4412/drivers/leds/Makefile
+				b  Makefile
+					kdiff3 ./Makefile  /home/cadtc/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/drivers/leds/Makefile
+
+			/* add below */
+			# LED Platform Drivers
++			obj-$(CONFIG_LEDS_SLASH_CHAR_DEV_TEST)		+= leds-tiny4412-char.o
+
+
+		4.	# make menuconfig
+				Device Drivers  --->
+					[*] LED Support  ---> 
+						[*] LEDS_SLASH_CHAR_DEV_TEST (NEW) 
+		
+		5.	# make
+			/* ************************/
+			 * Download zImage to EVB  *
+			/* ************************/
+	[ Target ]
+		5.	# ls /dev/tiny-4412-0
+		6.	# cat /proc/devices 
+		7.	# led

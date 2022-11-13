@@ -1,0 +1,31 @@
+Step 1 – Creation of the actual EXT4.img
+#	dd if=/dev/zero of=rootfs_ext4.img bs=512k count=60
+		Translation of the terms, 
+		bs =blocksize,
+		count=60, the number of block`s, in our case will result an image of 30 Mb.
+		To get the exact size of the image that you create use simple maths.
+		60 * 512K = 31457280 byte = 30M bytes
+
+Step 2 Formating the rootfs_ext4.img with EXT4
+# mkfs.ext4 rootfs_ext4.img
+		It will be a question where you will select yes (Y)
+
+Step 3 mount the directories that we previous created.
+# mkdir rootfs_ext4 && mount -o loop rootfs_ext4.img rootfs_ext4/
+
+Step 4 copy the content from the old system.img in the system_new.img
+# cp -v -r -p /home/cadtc/tiny4412/experiment/root_mkfs/*  ./rootfs_ext4
+
+Step 5 sync the files
+# sync
+
+Step 6 Unmounting the partitons.
+# umount rootfs_ext4/
+
+Step 7 reboot EVB and into Linux console with NFS
+
+Step 8 dd  rootfs_ext4.img to /dev/mmcblk0p2
+# dd if=./rootfs_ext4.img of=/dev/mmcblk0p2
+
+Step 9 Modify u-boot args then reboot
+# setenv bootargs 'noinitrd init=/linuxrc root=/dev/mmcblk0p2 rw noinitrd rootfstype=ext4 console=ttySAC0 lcd=S70'

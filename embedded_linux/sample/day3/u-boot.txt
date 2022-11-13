@@ -1,0 +1,248 @@
+
+========================================================================
+					0.	Das U-Boot
+========================================================================
+
+
+http://www.denx.de/wiki/view/DULG/UBoot
+
+1.	help
+		example:  CADTC #help nm
+
+2.	mtest - simple RAM test
+
+		example :
+			#mtest 40000000 400000010 0xffff 0x20
+
+3.	printenv - printenv - print environment variables
+
+		example :
+		#CADTC printenv
+
+4. 	setenv - setenv - set environment variables
+	savenv - saveenv - save environment variables to persistent storage
+   ­	
+		example :
+			#CADTC printenv
+			#CADTC setenv bootdealy 10
+			#CADTC printenv
+			#CADTC saveenv
+
+5.	mm - memory modify (auto-incrementing address)
+
+		example :
+			CADTC # mm 0xc0000000
+			c0000000: fbffbfff ? 12345678
+			c0000004: fbb1aff7 ? 87654321
+			c0000008: f7feebf4 ? 123abc45
+
+			CADTC # md.l 0xc0000000
+			c0000000: 12345678 87654321 123abc45 fffdffff    xV4.!Ce.E.:.....
+			c0000010: ffffff7d ffffffff ffffffff af9ff5f6    }...............
+
+	
+6.	md - memory display
+
+		example 
+			CADTC # md.l 40000000 
+			40000000: ffffffff 12345678 76543210 23456754    ....xV4..2TvTgE# 
+			40000010: 00000004 00000005 00000006 00000007    ................ 
+			40000020: 00000008 00000009 0000000a 0000000b    ................ 
+
+7.	setenv, run and macro 
+
+		example
+			setenv test 'md.l 40000000;md.l 50000000'
+			run test
+
+8.	saveenv - save environment variables to persistent storage
+		example
+			setenv test 'md.l 40000000;md.l 50000000'
+			saveenv
+
+
+
+========================================================================
+					1.	Build u-boot
+========================================================================
+
+[ Host ]
+
+1.	set cross compile
+	PC-Linux# source /home/cadtc/tiny4412/set_arm_4412_toolchain_path.sh
+
+2.
+	a.	cd /home/cadtc/tiny4412/Day3/
+	b.	PC-Linux# tar -xvjf uboot_tiny4412.tar.bz2
+	c.	cd uboot_tiny4412/
+
+3.	clear u-boot source tree
+	PC-Linux# make distclean
+
+4.	configure 	board name that we want to build
+	PC-Linux# make tiny4412_config
+
+5.	build u-boot source code
+	PC-Linux# make -j4
+
+6.	check  “u-boot.bin”
+	PC-Linux# ls u-boot.bin
+
+
+========================================================================
+					2.	update u-boot for SD card
+========================================================================
+SD boot - Make SD boot card
+
+1. find pre-build binary file
+
+2. Below is pre-build binary file
+	ls ~/tiny4412/experiment/init_boot_v2/sd_fuse/tiny4412/E4412_N.bl1.bin
+	ls ~/tiny4412/experiment/init_boot_v2/sd_fuse/tiny4412/mkbl2.bin
+	ls ~/tiny4412/experiment/init_boot_v2/sd_fuse/tiny4412/E4412_tzsw.bin
+	ls ~/tiny4412/experimentinit_boot_v2/u-boot-v2.bin
+
+3. Format SD card
+	PC-Linux# sudo ~/tiny4412/experiment/uboot_tiny4412_v2/sd_fuse/sd_fdisk /dev/sdb
+
+4. Run image install script
+	PC-Linux# sudo ~/tiny4412/experiment/uboot-tiny4412_v2/sd_fuse/tiny4412/sd_fusing.sh
+
+
+
+
+
+========================================================================
+					3.	update u-boot for eMMC
+========================================================================
+binary compare tool : vbindiff ( sudo apt-get install vbindiff )
+
+*Please copy “/home/cadtc/tiny4412/experiment/day3/combine_bl2_uboot.sh” to
+U-BOOT source directory first
+
+[Host]
+	0.	update bl2.bin
+	# 	mkbl2  u-boot.bin bl2.bin 14336
+	
+	1.  combin bl2.bin and u-boot.bin
+	# 	cat ./bl2.bin ../u-boot.bin > bl2_uboot.bin
+	
+	4.  sudo dnw ./bl2_uboot.bin
+
+[Target]
+	================================================
+		if you use sd 開機 	  boot "mmc_device" = 1
+		if you use emmc 開機   boot "mmc_device" = 0
+	================================================
+	sd boot  -> setenv mmc_device 1
+	eMMC  	 ->	setenv mmc_device 0
+	
+	2.  #emmc open $mmc_device
+
+	(download and write bl2_uboot.bin)
+	3.  #dnw
+
+	(write bl2)
+	5.  #mmc write $mmc_device 0xc0000000 0x10 0x1C
+
+	(write uboot)
+	6.  #mmc write $mmc_device 0xc0003800 0x30 0x21D
+	(u-boot.bin size 270K，space is 328K. So 48th block start，write 541 blocks, 541*512B=270.5*1024 :=270K)
+
+	7.  #emmc close $mmc_device
+	
+
+
+
+========================================================================
+						4.	Customer command
+========================================================================
+
+0.  cd ~/tiny4412/experiment/day3/3-create_cmd_exerise/cmd_helloworld
+
+1. geany ~/tiny4412/experiment/uboot_tiny4412_v2/common/Makefile
+   
+   add below 
+
+============================ start ====================================
+@@ -170,6 +170,7 @@ COBJS-$(CONFIG_LYNXKDI) += lynxkdi.o
+ COBJS-$(CONFIG_MODEM_SUPPORT) += modem.o
+ COBJS-$(CONFIG_UPDATE_TFTP) += update.o
+ COBJS-$(CONFIG_USB_KEYBOARD) += usb_kbd.o
++COBJS-$(CONFIG_HELLOWORLD) += cmd_helloworld.o
+ 
+ COBJS	:= $(sort $(COBJS-y))
+ XCOBJS	:= $(sort $(XCOBJS-y))
+============================ end ====================================
+	
+
+2. cp ./cmdhello.c  ~/tiny4412/experiment/uboot_tiny4412_v2/common
+
+3. make -j4
+
+4. update u-boot to SD card
+
+5. Target : #help hello
+
+6. Target : #hello
+
+
+========================================================================
+					5.	Modify	Source code
+========================================================================
+
+< Change prompt string >
+	1.	gedit include/configs/tiny4412.h
+	2.	search "CONFIG_SYS_PROMPT"
+	3.	change "TINY4412 # " to "QEDWWCW #"
+	4.	make (please reference above <Build u-boot>)
+	5.	update u-boot (please reference above <update u-boot for SD card or update u-boot for eMMC>)
+
+
+========================================================================
+					6.	standalone application
+========================================================================
+
+
+1 Host : gedit arch/arm/config.mk
+
+	ifeq ($(BOARD),omap2420h4) 
+	STANDALONE_LOAD_ADDR = 0x80300000 
+	else 
+	ifeq ($(SOC),omap3) 
+	STANDALONE_LOAD_ADDR = 0x80300000 
+	else 
+	STANDALONE_LOAD_ADDR = 0xc0000000 
+	endif 
+	endif 
+
+2 Host 		: make
+
+3 Target 	: dnw 60000000
+
+4 Host 		: sudo dnw ~/tiny4412/experiment/uboot_tiny4412_v2/examples/standalone/hello_world.bin 
+
+5 Target 	: go 60000000
+
+
+
+========================================================================
+					7.	Boot Linux Kernel
+========================================================================
+
+A)
+
+	1 Target  : dnw 40008000
+	
+	2 Host : sudo 4412dnw $(KERNEL_PATH)arch/arm/boot/zImage
+	
+	3 Target : bootm 40008000
+
+
+B) 
+
+	1  Target : movi read kernel 0 40008000
+	
+	2 Target : bootm 40008000
+
+

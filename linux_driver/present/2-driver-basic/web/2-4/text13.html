@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 14</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text12.html">Back</a> <a href="text14.html">Continue</a> <a href="text28.html">Last page</a> <a href="2-4_Devicetree.html">Overview</a> <a href="img13.html">Graphics</a></center><br>
+<h1>Devicetree and Device Driver</h1>
+<p>struct gpio_desc *__must_check gpiod_get_index(struct device *dev,</p>
+<p>					       const char *con_id,</p>
+<p>					       unsigned int idx,</p>
+<p>					       enum gpiod_flags flags)</p>
+<p>{</p>
+<p>          …..</p>
+<p>    if (dev) {</p>
+<p>        /* Using device tree? */</p>
+<p>        if (IS_ENABLED(CONFIG_OF) &amp;&amp; dev-&gt;of_node) {</p>
+<p>            desc = of_find_gpio(dev, con_id, idx, &amp;lookupflags);</p>
+<p>        } else if (ACPI_COMPANION(dev)) {</p>
+<p>            desc = acpi_find_gpio(dev, con_id, idx, &amp;flags, &amp;lookupflags);</p>
+<p>        }</p>
+<p>}</p>
+</body>
+</html>

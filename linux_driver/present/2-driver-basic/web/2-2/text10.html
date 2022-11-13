@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Turning the Messages On and Off</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text9.html">Back</a> <a href="text11.html">Continue</a> <a href="text17.html">Last page</a> <a href="2-2_Linux_Driver_Debugg.html">Overview</a> <a href="img10.html">Graphics</a></center><br>
+<h1>Messages Control</h1>
+<ul>
+<li>In the <b>Makefile</b> file</li>
+<li><b></b></li>
+<li><b>DEBUG = y</b></li>
+<li><b></b></li>
+<li><b>ifeq ($(DEBUG),y)</b></li>
+<li><b>  DEBFLAGS = -O –g –D<font color="#CC00FF">SCULL_DEBUG</font> </b></li>
+<li><b>  <font color="#CC00FF"># “-O” is needed to expand inlines</b></font></li>
+<li><b>else</b></li>
+<li><b>  DEBFLAGS = -O2</b></li>
+<li><b>endif</b></li>
+<li><b></b></li>
+<li><b>CFLAGS += $(DEBFLAGS)</b></li>
+</ul>
+</body>
+</html>

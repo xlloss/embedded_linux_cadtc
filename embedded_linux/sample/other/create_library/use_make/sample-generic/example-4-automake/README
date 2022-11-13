@@ -1,0 +1,29 @@
+How to create a automake project
+  1. create project
+  2. touch NEWS README ChangeLog AUTHORS
+  3. autoscan
+  4. Modify configure.scan then rename to configure.ac
+     a. rename
+        $ cp -a configure.scan configure.ac
+  
+     b. modify
+  	AC_INIT([helloworld], [0.1])
+        	AM_INIT_AUTOMAKE(src/helloworld, 0.1)
+  	AC_OUTPUT(Makefile src/Makefile)
+  
+  5  create Makefile.am
+  
+  	bin_PROGRAMS=helloworld
+  	helloworld_SOURCES=helloworld.c
+  	INCLUDES=-Iinc
+  
+  6. aclocal
+  7. autoconf
+  8. touch config.h.in; automake --add-missing
+  9. automake
+  10. ./configure
+  11. make
+
+How to build source code :
+  $ ./configure; make
+

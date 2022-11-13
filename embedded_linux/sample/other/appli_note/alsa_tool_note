@@ -1,0 +1,14 @@
+aplay:
+    aplay -Dhw:0,0 /oem/MrBig-ToBeWithYou.wav
+    aplay -Dhw:1,0 /oem/MrBig-ToBeWithYou.wav
+
+arecord:
+    arecord -Dhw:0,0 -r 44100 -t wav -f CD -d 5 /tmp/test.wav
+
+alsamixer:
+    alasmixer
+
+amixer:
+    amixer scontrols | less
+    amixer sget 'HP' 0%
+    amixer sset 'HP' 0%

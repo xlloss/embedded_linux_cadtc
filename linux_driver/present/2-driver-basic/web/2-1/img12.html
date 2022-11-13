@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 13</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="img0.html"><img src="first.png" border=0 alt="First page"></a> <a href="img11.html"><img src="left.png" border=0 alt="Back"></a> <a href="img13.html"><img src="right.png" border=0 alt="Continue"></a> <a href="img60.html"><img src="last.png" border=0 alt="Last page"></a> <a href="2-1_Char_Drivers.html"><img src="home.png" border=0 alt="Overview"></a> <a href="text12.html"><img src="text.png" border=0 alt="Text"></a></center><br>
+<center><img src="img12.png" alt=""></center>
+<p>
+兩個 Kernel API 需要瞭解:<br>
+<br>
+A) cdev_alloc()<br>
+<br>
+B) cdev_init()<br>
+<br>
+我們可以看到有兩個方法去初始化 struct cdev (字元驅動程式主體模型)<br>
+兩個方法都可以, 看設計者如何使用<br>
+<br>
+1) 宣告一個 struct cdev 的指標變數 struct cdev *my_cdev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;剛開始 "my_cdev" 當然是一個 "空指標"  所以我們需要去初始化<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;這種狀況, 我們就使用 cdev_alloc() 去初始化"字元驅動程式主體模型"<br>
+
+<br>
+<br>
+
+2) 宣告一個 struct cdev 的變數 struct cdev my_cdev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;my_cdev 已是一個佔有系統記憶體位址的變數, 但是我們仍需要初始化 "字元驅動程式主體模型"<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;我們就使用 cdev_init() 去初始化"字元驅動程式主體模型"<br>
+<br>
+<br>
+以上兩種狀況就是如此, 看設計者如何使用.
+ 
+</p>
+</body>
+</html>

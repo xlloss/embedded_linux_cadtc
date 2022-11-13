@@ -1,0 +1,40 @@
+build wireless-tools
+
+1. https://hewlettpackard.github.io/wireless-tools/Tools.html
+
+2. Download wireless-tools
+		# cd ~/tiny4412/cadtc/tiny4412/experiment/day4/5-usb-wifi/wireless_tools/
+		# tar -xvzf ./wireless_tools.29.tar.gz && cd wireless_tools.29/ && mkdir install
+
+3.	read README and INSTALL
+		# geany README
+		# geany INSTALL
+		
+4.	Build source code for AMR
+		a. modify Makefile
+			
+			PREFIX = /home/cadtc/tiny4412/experiment/day4/5-usb-wifi/wireless_tools/wireless_tools.29wireless_tools.29/install
+			CC = $(CROSS_COMPILE)gcc
+			AR = $(CROSS_COMPILE)ar
+			RANLIB = $(CROSS_COMPILE)ranlib
+			BUILD_STATIC = y
+
+		b. build
+			# make
+
+		c. install
+			# make install
+
+		d. copy tool binary to rootFS
+			# cp -a  install/sbin/* ~/tiny4412/experiment/root_mkfs/sbin/
+
+5.	TEST
+		a : iwlist wlan0 scan
+
+		#ASCII
+		b : iwconfig wlan0 essid "ESSID" key s:"PASSWORD"
+
+		#hex WEP
+		c : iwconfig wlan0 essid "ESSID" key s:"PASSWORD"
+
+		d : udhcpc -i wlan0

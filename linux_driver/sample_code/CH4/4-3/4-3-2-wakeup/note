@@ -1,0 +1,4 @@
+insmod /tmp/sleepone.ko
+mknod /dev/sleepone c 250 0
+/tmp/sleepone_test &
+insmod  /tmp/wakeupone.ko

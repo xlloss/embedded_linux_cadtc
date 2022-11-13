@@ -1,0 +1,56 @@
+GNU C Compiler
+
+=============================
+		exercise 1 :
+=============================
+
+-S	:
+	Compile only; do not assemble or link
+	#gcc -S main.c
+
+-c 	:
+	Compile and assemble, but do not link
+	#gcc -c main.c
+
+=============================
+		exercise 2 :
+=============================
+
+-o <file> : Place the output into <file>
+	a)
+		#aarch64-linux-gnu-gcc -o main main.o
+		#./main
+	b)
+		#ls
+		#rm main.o main
+		#ls
+		#gcc -o main main.c
+		#./main
+
+=============================
+		exercise 3 :
+=============================
+
+-D : defines a macro to be used by the preprocessor
+	#rm main
+	#gcc -DD_FLAG -o main main.c
+	#./main
+
+=============================
+		exercise 4 :
+=============================
+
+-I :  adds include directory of header files
+	#rm main.o
+	#gcc -DI_FLAG -Itest_inc -o main main.c func_1.c
+	#gcc -DI_FLAG -Itest_inc -o main main.c func_1.c
+	#./main
+
+
+=============================
+		exercise 5 :
+=============================
+
+-l : links with a library file
+	#rm main
+	gcc -llibm.so -DL_FLAG -Itest_inc -o main main.c

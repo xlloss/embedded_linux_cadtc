@@ -1,0 +1,75 @@
+
+=======================================================================
+		0.	Introduction
+=======================================================================
+
+	A graphic file viewer for the Linux framebuffer device 
+
+
+=======================================================================
+		1.	decompress "fbv-1.0b.tar.gz"
+=======================================================================
+
+	# tar xvf fbv-1.0b.tar.gz
+
+
+=======================================================================
+		3.	Configure and build source code
+=======================================================================
+
+	# cd fbv-1.0b
+	# ./configure --without-libungif --without-libpng
+	# cp -a ../../libjpeg/jpeg-6b/install/lib/* ./
+		cp -a ../../libjpeg/jpeg-6b/install/include/* ./
+
+=======================================================================
+		4.	Modify Makefile
+=======================================================================
+	
+	# geany ./Makefile
+
+	a ) add below in Makefile
+		CC	= arm-linux-gcc
+		CFLAGS  = -O2 -Wall -D_GNU_SOURCE -I/home/cadtc/tiny4412/experiment/day4/3-application-exerise/panel_screen/fbv-1.0b/
+
+	b ) add below in Makefile
+		LIBS	= -L/home/cadtc/tiny4412/experiment/day4/3-application-exerise/panel_screen/fbv-1.0b/ -ljpeg
+	
+	c ) build code
+		# make 
+
+	d ) Copy execute file to target
+		cp -a ./fbv ~/tiny4412/experiment/root_mkfs/usr/local/bin
+	
+???????????????????????????????????????????????????????????????????????
+		5.	download, compile, make
+			libpng-1.4.1.tar.bz2 and libungif-4.1.4.tar.gz
+???????????????????????????????????????????????????????????????????????
+
+
+		$ tar xvf libpng-1.4.1.tar.bz2
+		$ cd ./libpng-1.4.1
+		$ ./configure --host=arm-linux CC=arm-linux-gcc --prefix=/home/cadtc/tiny4412/experiment/day4/3-application-exerise/panel_screen/libpng-1.4.1
+		$ make -j4
+		$ make install
+	
+		$ tar xvf libungif-4.1.4.tar.gz
+		$ cd ./libungif-4.1.4
+		$ ./configure --host=arm-linux CC=arm-linux-gcc --prefix=/home/cadtc/tiny4412/experiment/day4/3-application-exerise/panel_screen/libpng-1.4.1
+		$ make -j4
+		$ make install
+
+		Include png/gif library by modifying this in  " fbv Makefile "
+		LIBS    =  -ljpeg -lpng -lungif
+
+		$ cp libungif-4.1.4/./lib/.libs/libungif.a fbv-1.0b
+		$ cp libungif-4.1.4/lib/gif_lib.h fbv-1.0b
+		$ cp libpng-1.4.1/lib/libpng14.a fbv-1.0b
+		$ cd fbv-1.0b
+		$ make
+
+=======================================================================
+		6 run ./fbv demo.jpg and bmp on Target
+=======================================================================
+		# ./fbv testimg.jpg
+		# ./fbv testimg.bmp

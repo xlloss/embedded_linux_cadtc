@@ -1,0 +1,9 @@
+&i2c2 {
+	status = "okay";
+	bmp180@77 {
+		status = "okay";
+		compatible = "bmp180";
+		reg = <0x77>;
+	};
+};
+

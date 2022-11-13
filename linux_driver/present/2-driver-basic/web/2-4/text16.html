@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 17</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text15.html">Back</a> <a href="text17.html">Continue</a> <a href="text28.html">Last page</a> <a href="2-4_Devicetree.html">Overview</a> <a href="img16.html">Graphics</a></center><br>
+<h1>Device Tree Base</h1>
+<p>/{</p>
+<p>	node1@0 {</p>
+<p>		string-property = &quot;A string&quot;;</p>
+<p>		string-list-property = &quot;first string&quot;, &quot;second string&quot;;</p>
+<p>		byte-data-property = [0x01 0x23 0x34 0x56];</p>
+<p>		child-node1@0 {</p>
+<p>			first-child-property;</p>
+<p>			second-child-property = &lt;1&gt;;</p>
+<p>			third-child-property = &lt;&amp;node2&gt;;</p>
+<p>			a-string-property = &quot;Hello, world&quot;;</p>
+<p>		};</p>
+<p>		child-node2@1 {</p>
+<p>		};</p>
+<p>	};</p>
+<p>	node2: node2@1 {</p>
+<p>		an-empty-property;</p>
+<p>		a-cell-property = &lt;1 2 3 4&gt;; /* each number (cell) is a uint32 */</p>
+<p>		child-node1 {</p>
+<p>		};</p>
+<p>	};</p>
+<p>};</p>
+<p>root</p>
+<p>Node name </p>
+<p>property values</p>
+<p>Phandle</p>
+<p>Label</p>
+</body>
+</html>

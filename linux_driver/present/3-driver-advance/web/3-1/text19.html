@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 20</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text18.html">Back</a> <a href="text20.html">Continue</a> <a href="text20.html">Last page</a> <a href="3-1_Allocating_Memory.html">Overview</a> <a href="img19.html">Graphics</a></center><br>
+<h1><b>vmalloc</b> and Friends</h1>
+<ul>
+<li><b>ioremap</b> builds page tables</li>
+<ul>
+<li><b>Does not allocate memory</b></li>
+<li>Takes a physical address (<b>offset</b>) and return a virtual address</li>
+<ul>
+<li><b>Useful to map the address of a Hardware buffer to kernel space</b></li>
+</ul>
+<li>Should use <b>readb</b> and other relation functions to access remapped memory</li>
+</ul>
+</ul>
+</body>
+</html>

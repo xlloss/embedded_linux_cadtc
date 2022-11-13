@@ -1,0 +1,53 @@
+#! /bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:
+runlevel=S
+prevlevel=N
+umask 022
+export PATH runlevel prevlevel
+
+#
+#	Trap CTRL-C &c only in this shell so we can interrupt subprocesses.
+#
+trap ":" INT QUIT TSTP
+/bin/hostname FriendlyARM
+
+/bin/mount -n -t proc none /proc
+/bin/mount -n -t sysfs none /sys
+/bin/mount -t ramfs none /dev
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+/sbin/mdev -s
+/bin/hotplug
+# mounting file system specified in /etc/fstab
+mkdir -p /dev/pts
+mkdir -p /dev/shm
+/bin/mount -n -t devpts none /dev/pts -o mode=0622
+/bin/mount -n -t tmpfs tmpfs /dev/shm
+/bin/mount -n -t ramfs none /tmp
+/bin/mount -n -t ramfs none /var
+if grep usbfs /proc/filesystems >/dev/null 2>&1; then
+	/bin/mount -n -t usbfs none /proc/bus/usb
+fi
+mkdir -p /var/empty
+mkdir -p /var/log
+mkdir -p /var/lock
+mkdir -p /var/run
+mkdir -p /var/tmp
+
+/bin/usbhotplugd
+/sbin/hwclock -s
+
+syslogd
+#/etc/rc.d/init.d/leds start
+#echo "                        " > /dev/tty1
+#echo "Starting leds service..." > /dev/tty1
+#echo "                        "
+#sleep 1
+
+echo "                        " > /dev/tty1
+/etc/rc.d/init.d/alsaconf start
+echo "Loading sound card config..." > /dev/tty1
+echo "                        "
+
+/sbin/getty -L ttySAC0 115200 vt100 

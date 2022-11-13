@@ -1,0 +1,109 @@
+===========================================================
+				Build Basic rootfs
+===========================================================
+
+1. 	create necessary directgory
+		a )  # mkdir my_rootfs
+
+		b )  # cd my_rootfs && mkdir -p bin  dev  etc  home  lib  proc  root  sbin  sys  tmp  usr  var etc/init.d
+
+		c )  
+			 # cp -a ../rcS  ./etc/init.d/
+		     # cp -a ../mdev.conf  ./etc/
+		     # cp -a ../mtab  ./etc/
+		     # cp -a ../passwd  ./etc/
+		     # cp -a ../profile  ./etc/
+
+2. 	build busybox
+		
+		
+		a )   # cd ~/tiny4412/experiment/day5/1-create_rootfs
+			  # wget --no-check-certificate http://www.busybox.net/downloads/busybox-1.23.0.tar.bz2
+
+		b )   # tar -xvjf  busybox-1.23.0.tar.bz2
+
+		c )   # source ~/tiny4412/experiment/set_arm_4412_toolchain_path.sh
+	
+		d )   # cd busybox-1.23.0 && make menuconfig
+				Busybox Settings  --->
+					Build Options  ---> 
+						(arm-none-linux-gnueabi-) Cross Compiler prefix
+						
+
+		e )   # make -j4
+
+		f )   # make install (intsall ./_install)
+			  # cp -a ./_install/*  ~/tiny4412/experiment/day5/1-create_rootfs/my_rootfs/
+
+3. 	copy C library to rootfs
+
+		a ) # cp -a ~/tiny4412/experiment/opt/FriendlyARM/toolschain/4.5.1/arm-none-linux-gnueabi/sys-root/lib/*  ~/tiny4412/experiment/day5/1-create_rootfs/my_rootfs/lib/
+
+4. 	change u-boot parameters about rootfs
+
+		a ) # setenv bootargs noinitrd init=/linuxrc root=/dev/nfs ip=192.168.0.20:192.168.0.10:192.168.0.1:255.255.255.0::eth0:on nfsroot=192.168.0.10:/home/cadtc/tiny4412/experiment/day5/1-create_rootfs/my_rootfs, console=ttySAC0 lcd=S70
+
+5. 	create device note
+		a )	# cd ~/tiny4412/experiment/day5/1-create_rootfs/my_rootfs/dev
+
+		b )	# sudo mknod console c 5 1
+		
+		c )	# sudo mknod null c 1 3
+
+
+6.	update my_rootfs to /etc/exports
+	Please check 
+	**** NFS Setting ****
+	====================================================================
+			Build NFS environment
+			
+			1. sudo apt-get install nfs-kernel-server nfs-common portmap
+			
+			2. comfigure exports
+				a.	sudo gedit /etc/exports
+				b.	add ur share file forder
+			
+			example :
+				/home/cadtc/tiny4412/experiment/day5/1-create_rootfs/my_rootfs *(rw,sync,no_root_squash)
+			
+				*: any ip can entry this
+			
+			4. restart 
+			
+				a.	sudo /etc/init.d/portmap restart
+				b.	sudo /etc/init.d/nfs-kernel-server restart 
+			
+			5. Host :
+				ifconfig ethx 192.168.0.10
+			
+			6.	sudo tar -xvjf root_mkfs.tar.bz2
+						
+			7. local test
+				a.	sudo mount -t nfs 192.168.0.10:/home/cadtc/tiny4412/experiment/day5/1-create_rootfs/my_rootfs /mnt/
+			
+			8.	ls -l /mnt
+			
+			9.	sudo umount /mnt
+	====================================================================
+
+
+	
+7.	Download Kernel Image and boot it
+	========================================
+			Download kernel Image
+	========================================
+	
+	Please insert microUSB first
+	
+	[ Host ]
+		2.	sudo dnw ~/tiny4412/experiment/init_boot_v2/zImage
+		6.	ifconfig ethx 192.168.0.10
+	
+	[ Target ]
+		1.	dnw 0xc0008000
+		3.	setenv serverip 192.168.0.10
+		4.	setenv ipaddr 192.168.0.20
+		5.	set bootargs noinitrd init=/linuxrc root=/dev/nfs ip=192.168.0.20:192.168.0.10:192.168.0.1:255.255.255.0::eth0:on nfsroot=192.168.0.10:/home/cadtc/tiny4412/experiment/day5/1-create_rootfs/my_rootfs, ip=192.168.0.20 console=ttySAC0 lcd=S70
+	
+		6.	savenv
+		7.	bootm 0xc00080000

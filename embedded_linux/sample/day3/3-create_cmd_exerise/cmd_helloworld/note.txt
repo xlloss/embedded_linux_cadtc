@@ -1,0 +1,20 @@
+1.	understand cmd_helloworld.c
+
+2.	add below to [ uboot_tiny4412/common/Makefile ]
+
+		a.	手動修改
+			COBJS-$(CONFIG_HELLOWORLD) += cmd_helloworld.o		
+		
+3.	add below to [ uboot_tiny4412/include/configs/tiny4412.h ]
+
+		a.	手動修改
+			#define CONFIG_HELLOWORLD
+
+4.	add cmd_helloworld.c
+
+		a.	手動修改
+			cp cmd_helloworld.c ~/tiny4412/experiment/day3/uboot_tiny4412/common [記得瞭解 Linux "cp" 指令]
+
+5.	re-build u-boot
+
+6.	update u-boot to eMMC

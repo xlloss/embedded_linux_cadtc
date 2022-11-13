@@ -1,0 +1,10 @@
+&i2c7 {
+	status = "okay";
+	at24@50 {
+		status = "disabled";
+		compatible = "at24,24c02";
+		pagesize = <64>;
+		reg = <0x50>;
+	};
+};
+

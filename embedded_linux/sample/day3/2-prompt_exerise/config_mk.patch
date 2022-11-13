@@ -1,0 +1,10 @@
+--- a/day3/uboot_tiny4412_ver2/uboot_tiny4412-master/arch/arm/config.mk
++++ b/day3/uboot_tiny4412_ver2/uboot_tiny4412-master/arch/arm/config.mk
+@@ -29,7 +29,7 @@ else
+ ifeq ($(SOC),omap3)
+ STANDALONE_LOAD_ADDR = 0x80300000
+ else
+-STANDALONE_LOAD_ADDR = 0xc100000
++STANDALONE_LOAD_ADDR = 0xc1000000
+ endif
+ endif

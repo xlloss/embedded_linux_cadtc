@@ -1,0 +1,12 @@
+driver:
+	driver/hwmon/sht21.c
+
+&i2c2 {
+    status = "okay";
+    sht21@40 {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        compatible = "sht21";
+        reg = <0x40>;
+    };
+

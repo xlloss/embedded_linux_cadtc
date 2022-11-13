@@ -1,0 +1,27 @@
+commit de2c09cc70bf856a03098c3d6a2d4e5ff18b679b
+Author: Slash.Huang <slash.huang@tw.fujitsu.com>
+Date:   Tue Nov 29 12:07:07 2016 +0800
+
+    chanhe libjpeg version
+
+diff --git a/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.hash b/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.hash
+index 035812a..168e0f5 100644
+--- a/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.hash
++++ b/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.hash
+@@ -1,2 +1,2 @@
+ # locally computed hash
+-sha256 3a753ea48d917945dd54a2d97de388aa06ca2eb1066cbfdc6652036349fe05a7 jpegsrc.v9a.tar.gz
++sha256 00029b1473f0f0ea72fbca3230e8cb25797fbb27e58ae2e46bb8bf5a806fe0b3 jpegsrc.v8d.tar.gz
+diff --git a/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.mk b/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.mk
+index c4190c7..feb7c33 100644
+--- a/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.mk
++++ b/experiment/day5/2-create_rootfs_use_buildroot/buildroot-2015.08/package/libjpeg/libjpeg.mk
+@@ -4,7 +4,7 @@
+ #
+ ################################################################################
+ 
+-LIBJPEG_VERSION = 9a
++LIBJPEG_VERSION = 8d
+ LIBJPEG_SITE = http://www.ijg.org/files
+ LIBJPEG_SOURCE = jpegsrc.v$(LIBJPEG_VERSION).tar.gz
+ LIBJPEG_LICENSE = jpeg-license (BSD-3c-like)

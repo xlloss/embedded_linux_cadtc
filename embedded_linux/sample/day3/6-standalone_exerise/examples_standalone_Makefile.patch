@@ -1,0 +1,21 @@
+--- /home/slash/uboot_tiny4412/examples/standalone/Makefile	2013-03-15 16:47:07.000000000 +0800
++++ uboot_tiny4412/examples/standalone/Makefile	2015-11-25 14:46:55.237829811 +0800
+@@ -26,7 +26,8 @@
+ ELF-$(ARCH)  :=
+ ELF-$(BOARD) :=
+ ELF-$(CPU)   :=
+-ELF-y        := hello_world
++#ELF-y        := hello_world
++ELF-y        := led_sample
+ 
+ ELF-$(CONFIG_SMC91111)           += smc91111_eeprom
+ ELF-$(CONFIG_SMC911X)            += smc911x_eeprom
+@@ -58,7 +59,7 @@
+ LIBAOBJS-mpc8xx      += test_burst_lib.o
+ LIBAOBJS := $(LIBAOBJS-$(ARCH)) $(LIBAOBJS-$(CPU))
+ 
+-LIBCOBJS = stubs.o
++LIBCOBJS = stubs.o ../../drivers/gpio/s5p_gpio.o
+ 
+ LIBOBJS	= $(addprefix $(obj),$(LIBAOBJS) $(LIBCOBJS))
+ 

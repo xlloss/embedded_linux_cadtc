@@ -1,0 +1,24 @@
+ar:
+A) static library
+	a)	x86-PC
+		1.	$ cd create_static_lib
+		2.	$ make
+
+	b)	ARM
+		1.	$ source ~/rk3399/Day1/tool/set_arm_4412_toolchain_path.sh
+		2.	$ cd create_static_lib
+		3.	$ make
+		4.	$ ./test
+
+b) dymamic library
+	a)	x86-PC
+		1 	$ cd create_dymamic_lib
+		2	$ export CC=gcc
+		3	$ export DIR=$('pwd')
+		4 	$ make
+		5	$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/cadtc/rk3399/experiment/day2/3-build_library/create_dymamic_lib
+
+	b)	ARM
+		1 	$ cd create_dymamic_lib
+		2 	$ make
+		3   $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/cadtc/rk3399/experiment/day2/3-build_library/create_dymamic_lib

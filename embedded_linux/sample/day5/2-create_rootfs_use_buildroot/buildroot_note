@@ -1,0 +1,133 @@
+Use Buildroot to create rootfs
+
+a ) wget http://buildroot.uclibc.org/downloads/buildroot-2015.08.tar.gz
+
+b ) tar -xvzf buildroot-2015.08.tar.gz && cd buildroot-2015.08
+
+c ) make mini2440_defconfig
+
+d ) make menuconfig
+
+e ) cancel build kernel
+		Kernel  ---> 
+			 [ ] Linux Kernel  
+
+f ) cancel buid bootloader
+		 Bootloaders  --->
+			[ ] U-Boot
+
+g ) Toolchain setting
+		Toolchain  --->
+			Toolchain type (External toolchain)  ---> 
+				(X) External toolchain
+
+
+select toolchain type :
+	Toolchain type (External toolchain)  --->
+
+set toolchain path
+	(/home/cadtc/tiny4412/experiment/opt/FriendlyARM/toolschain/4.5.1/) Toolchain path 
+	External toolchain gcc version (4.5.x)  --->
+	(arm-none-linux-gnueabi) Toolchain prefix  
+	External toolchain C library (glibc/eglibc)  --->
+
+h ) set Toolchain has RPC support
+	[*] Toolchain has RPC support? 
+
+i ) build buildroot
+	# make 
+
+j ) make finish, we enter output directory 
+	# cd output/images
+
+k ) extract  rootfs.tar
+	# mkdir my_rootfs &&  tar -xvf rootfs.tar  -C my_rootfs/
+	# sudo chown -R root:root ./my_rootfs/
+
+
+l ) modify etc/passwd file
+	# sudo gedit etc/passwd
+	-root:x:0:0:root:/root:/bin/sh
+	+root::0:0:root:/root:/bin/sh
+
+m ) add init process in etc/init.d
+	# cd etc/init.d
+	# sudo gedit S00init
+
+########################################################################
+#                                 Start
+########################################################################	
+
+#!/bin/sh
+#
+# Start init
+#
+
+start() {
+	echo -n "Starting init: "
+	/bin/hostname -F /etc/hostname
+
+	/bin/mount -n -t proc none /proc
+	/bin/mount -n -t sysfs none /sys
+	/bin/mount -t ramfs none /dev
+
+	echo /sbin/mdev > /proc/sys/kernel/hotplug
+	/sbin/mdev -s
+	/bin/hotplug
+	# mounting file system specified in /etc/fstab
+	mkdir -p /dev/pts
+	mkdir -p /dev/shm
+	/bin/mount -n -t devpts none /dev/pts -o mode=0622
+	/bin/mount -n -t tmpfs tmpfs /dev/shm
+	/bin/mount -n -t ramfs none /tmp
+	/bin/mount -n -t ramfs none /var
+	mkdir -p /var/empty
+	mkdir -p /var/log
+	mkdir -p /var/lock
+	mkdir -p /var/run
+	mkdir -p /var/tmp
+
+	/bin/sh /etc/modules.conf
+
+	/sbin/getty -L ttySAC0 115200 vt100 
+}
+
+stop() {
+	echo -n "Stopping logging: "
+	start-stop-daemon -K -q -p /var/run/syslogd.pid
+	start-stop-daemon -K -q -p /var/run/klogd.pid
+	echo "OK"
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart|reload)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+
+########################################################################
+#                                 End
+########################################################################
+
+n ) # sudo chmod 777 S00init
+
+o ) update build_root rootfs to  /etc/exports
+
+p ) restart nfs server
+
+restart 
+	a.	sudo /etc/init.d/portmap restart
+	b.	sudo /etc/init.d/nfs-kernel-server restart 
+

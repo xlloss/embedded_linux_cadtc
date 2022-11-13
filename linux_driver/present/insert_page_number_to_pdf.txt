@@ -1,0 +1,2 @@
+pspdftool 'number(x=-1pt,y=-1pt,start=1,size=10)' input.pdf output.pdf
+

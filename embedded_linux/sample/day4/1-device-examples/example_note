@@ -1,0 +1,118 @@
+============================================================
+Please make sure ARM toolchain setting finish first !!!!!
+============================================================
+
+A. adc-test
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				Character devices  ---> 
+					<*> ADC driver for FriendlyARM Tiny4412 development boards
+		2.	# cd adc-test/
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./adc-test
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+B. buttons
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				Character devices  ---> 
+					 <*> Buttons driver for FriendlyARM Tiny4412 development boards
+				# make
+
+		2.	# cd buttons/
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./buttons
+		
+		
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+C. I2C
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				 <*> I2C support  --->
+					 I2C Hardware Bus support  --->
+						<*> S3C2410 I2C Driver
+				# make
+
+		2.	# cd i2c/
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./i2c
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+D. led-payer
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				Character devices  ---> 
+					<*> LED Support for FriendlyARM Tiny4412 GPIO LEDs
+				# make
+
+		2.	# cd led-payer/
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./led-payer
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+E. led
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				Character devices  ---> 
+					<*> LED Support for FriendlyARM Tiny4412 GPIO LEDs
+				# make
+
+		2.	# cd led
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./led
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+F. pwm
+	[ Host ]
+		0.	# cd ~/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/
+		1.	# make menuconfig
+			Device Drivers  --->
+				Character devices  ---> 
+					<*> Buzzer driver for FriendlyARM Tiny4412 development boards
+
+				# make
+
+		2.	# cd pwm/
+		3.	# make
+		4.	# sudo make install
+	
+	[ Target ]
+		5.	# ./pwm

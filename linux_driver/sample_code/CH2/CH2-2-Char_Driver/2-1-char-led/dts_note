@@ -1,0 +1,28 @@
+char-led {
+	status = "okay";
+	compatible = "char,led-sample";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&led_0 &led_1 &led_2 &led_3>;
+	led0-gpios = <&gpio2 RK_PB3 GPIO_ACTIVE_LOW>;
+	led1-gpios = <&gpio4 RK_PC2 GPIO_ACTIVE_LOW>;
+	led2-gpios = <&gpio4 RK_PC6 GPIO_ACTIVE_LOW>;
+	led3-gpios = <&gpio4 RK_PC5 GPIO_ACTIVE_LOW>;
+};
+
+&pinctrl {
+	led {
+		led_0: led_0 {
+			rockchip,pins = <2 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+		led_1: led_1 {
+			rockchip,pins = <4 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+		led_2: led_2 {
+			rockchip,pins = <4 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+		led_3: led_3 {
+			rockchip,pins = <4 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};

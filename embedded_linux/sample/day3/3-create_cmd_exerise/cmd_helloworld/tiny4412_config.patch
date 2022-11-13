@@ -1,0 +1,12 @@
+diff --git a/Day3/uboot_tiny4412/include/configs/tiny4412.h b/Day3/uboot_tiny4412/include/configs/tiny4412.h
+index 9e15ef4..242c6cc 100644
+--- a/Day3/uboot_tiny4412/include/configs/tiny4412.h
++++ b/Day3/uboot_tiny4412/include/configs/tiny4412.h
+@@ -48,6 +48,7 @@
+ 
+ #define CONFIG_TRUSTZONE
+ #define CONFIG_TRUSTZONE_RESERVED_DRAM	0x100000
++#define CONFIG_HELLOWORLD
+ 
+ #define CONFIG_SECURE_BL1_ONLY
+ //#define CONFIG_SECURE_BOOT

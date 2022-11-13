@@ -1,0 +1,14 @@
+Patch file Exercise
+
+1)	create patch file
+	# cd exercise_1/
+	# diff -Naur hello_1.c hello_2.c > hello.patch
+
+2)	add patch file
+	# ../cd exercise_2/
+	# cp ../exercise_1/hello.patch ./
+	# patch -p0 < hello.patch
+
+3)	remove patch file
+	patch -R -p0 < hello.patch
+

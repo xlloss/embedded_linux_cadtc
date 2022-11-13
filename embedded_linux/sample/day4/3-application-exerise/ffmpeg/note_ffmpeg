@@ -1,0 +1,46 @@
+
+*1.	source set_arm_linaro_toolchain_path.sh
+2.	cd ~/tiny4412/day4/3-application-exerise/ffmpeg
+3.	wget http://ffmpeg.org/releases/ffmpeg-2.8.3.tar.bz2
+4.	tar -xvjf ffmpeg-2.8.3.tar.bz2
+5.	cd ffmpeg-2.8.3
+========================================================================
+						Configure ffmpeg
+========================================================================
+
+6.	
+	./configure --cross-prefix=arm-none-linux-gnueabi- --enable-cross-compile --target-os=linux --cc=arm-linux-gcc --arch=arm --prefix=/home/cadtc/tiny4412/experiment/root_mkfs/usr/local/bin/ffmpeg --enable-shared --disable-static --enable-gpl --enable-ffmpeg --disable-ffplay --disable-ffserver --enable-swscale --enable-pthreads --disable-armv5te --disable-yasm --disable-stripping --enable-gpl --disable-network --enable-avfilter
+
+
+
+
+========================================================================
+						Build source
+========================================================================
+	
+7.
+
+	a )	make -j4
+
+*	[ Target ]
+	b )	mkdir usr/local/bin/ffmpeg
+
+========================================================================
+						install and test
+========================================================================
+8.
+	a )	make install
+	
+
+[ Target ]
+9.
+	a)
+		export PATH=$PATH:/usr/local/bin/ffmpeg/bin
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin/ffmpeg/lib
+	
+	b )	TEST
+		record video 
+		ffmpeg -f video4linux2 -s 320x240 -r 50 -i /dev/video15  /slash.mpeg
+
+	c ) Cache picture
+		ffmpeg -i /MELT.MPG  -an -ss 00:00:1 -y test.jpg

@@ -1,0 +1,71 @@
+=====================================================================
+	1.	Introduction
+=====================================================================
+
+	http://www.mplayerhq.hu/design7/news.html
+	http://en.wikipedia.org/wiki/MPlayer
+
+
+
+=====================================================================
+	2. decompress MPlayer-1.0rc4.tar.bz2
+=====================================================================
+
+	# tar -jxvf MPlayer-1.0rc4.tar.bz2  && cd MPlayer-1.0rc4/
+
+
+=====================================================================
+	3.	./configure ,make and copy to Tiny4412
+=====================================================================
+
+	a )
+		# ./configure --host-cc=gcc --cc=arm-none-linux-gnueabi-gcc \
+--target=arm-linux --enable-fbdev --disable-dvdread --disable-live \
+--disable-mp3lib --enable-mad --disable-win32dll --disable-mencoder \
+--disable-ivtv --disable-dvdnav --disable-dvdread-internal \
+--disable-libdvdcss-internal --enable-libavcodec_a --prefix=./install
+
+	b )
+		$make -j8
+
+	c )
+	************************************************************
+		install: strip process terminated abnormally
+		将config.mak中 INSTALLSTRIP=-s，-s去掉即可
+	************************************************************		
+		make -n install
+		make install
+
+	d ) sudo cp -a ./install/bin/* /home/cadtc/tiny4412/experiment/root_mkfs/usr/local/bin
+		sudo cp -a ./install/lib/* /home/cadtc/tiny4412/experiment/root_mkfs/usr/local/lib
+
+
+=====================================================================
+	4.	plug webcam
+	(sonix chip idVendor=0c45, idProduct=6340) into Tiny4412 and run "mplayer"
+=====================================================================
+
+    [root@Tiny4412 /]#mplayer -vo fbdev -fps 15 tv:// -tv  driver=v4l2:device=/dev/video15 -vf scale=800:480
+
+	*There should be frames on the screen
+
+
+=====================================================================
+	5.	play mpg file
+=====================================================================
+	[root@Tiny4412 /]# ./mplayer -vo fbdev MELT.MPG -fs
+	[root@Tiny4412 /]# ./mplayer -vo fbdev bugs.avi 
+
+
+=====================================================================
+6.	play raw file
+	(you can catch RAW file with luvcview pleaser refer to NOTE_luvcview)
+=====================================================================
+
+	[root@Tiny4412 /]# ./mplayer -vo fbdev -demuxer rawvideo -rawvideo w=320:h=240:format=yuy2 stream.raw -loop 0
+
+
+	*for furthre user guide refer to http://www.mplayerhq.hu/design7/documentation.html
+	*Here are the webcam qualified that be able to capture Image/Video with this mplayer
+		->logitech UVC Camera (046d:080f),UVC
+		->sonix USB 2.0 Camera (0c45:6340),UVC

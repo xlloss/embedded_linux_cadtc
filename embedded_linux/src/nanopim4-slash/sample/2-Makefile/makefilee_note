@@ -1,0 +1,52 @@
+Exercise Makefile
+
+===============================================
+	hello_world_ex1  : Signal source file
+===============================================
+1.	#cd hello_world_ex1
+2.	#make
+
+
+
+
+===============================================
+	hello_world_ex2  : Multi   source file
+===============================================
+1.	#make
+2.	#./main
+
+
+
+
+===============================================
+	hello_world_ex4  : Double colon rule
+===============================================
+1.	#make
+2.	# ls -l main
+
+3.	#touch debug
+4.	#make
+5.	# ls -l main
+
+
+
+
+
+===============================================
+	hello_world_ex5  : Automatic Variables
+===============================================
+1.	#make
+2.	#./hello_world
+
+
+
+
+
+1.
+On x86 Test
+export CROSS_COMPILE=
+
+2.
+On ARM EVB Test
+source set_arm_4412_toolchain_path.sh
+please copy binary “hello_world” to “rootfs/”  then execute.

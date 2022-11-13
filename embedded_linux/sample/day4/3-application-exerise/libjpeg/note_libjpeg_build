@@ -1,0 +1,83 @@
+[ Host ]
+
+********************************************************
+* 		please check arm tool chain if setting or not  *
+********************************************************
+
+========================================================
+					libtool
+========================================================
+
+- Get Source code -
+	0. # wget ftp://ftp.gnu.org/gnu/libtool/libtool-2.4.tar.gz
+	1. # tar -xvzf libtool-2.4.tar.gz && cd libtool-2.4
+
+- Configure -
+	2. # ./configure --host=arm-linux CC=arm-linux-gcc --prefix=/home/cadtc/tiny4412/experiment/day4/3-application-exerise/libjpeg/libtool-2.4/install
+
+
+- Build -
+	3. # make -j4
+	4. # ls -l ./libtool
+
+
+
+========================================================
+					libjpeg_build
+========================================================
+
+- Get Source code -
+	0.	
+	wget http://www.ijg.org/files/jpegsrc.v6b.tar.gz
+	tar -xvzf jpegsrc.v6b.tar.gz
+
+
+- Configure -
+	1. # cd jpeg-6b
+
+	2. # ./configure --help
+
+	3. # cp ../libtool-2.4/libtool ./
+	
+	4. # ./configure --host=arm-none-linux-gnueabi CC=arm-none-linux-gnueabi-gcc --prefix=/home/cadtc/tiny4412/experiment/day4/3-application-exerise/libjpeg/jpeg-6b/install --enable-shared
+
+	5.
+		# geany ./Makefile
+
+		please search "LIBTOOL"
+
+		***********************************************************************
+		# If using GNU libtool, LIBTOOL references it; if not, LIBTOOL is empty.
+		LIBTOOL=./libtool --tag=arm-none-linux-gnueabi-gcc
+		# $(O) expands to "lo" if using libtool, plain "o" if not.
+		# Similarly, $(A) expands to "la" or "a".
+		***********************************************************************
+	
+- Build Source -
+	6. make -j4
+
+
+- Install -
+	5.
+		a.	make -n install
+		b.	mkdir -p ./install/bin &&  mkdir -p ./install/man/man1 && mkdir -p ./install/lib && mkdir -p ./install/include
+		c.	make install
+
+	7.
+		sudo cp -a ./install/bin/* ~/tiny4412/experiment/root_mkfs/usr/local/bin
+		sudo cp -a ./install/lib/* ~/tiny4412/experiment/root_mkfs/usr/local/lib
+
+	8.	sudo cp ./testimg.jpg ~/tiny4412/experiment/root_mkfs
+
+
+- Test in Target -
+
+[ Target ]
+
+	0.
+		export PATH=$PATH:/usr/local/bin:/usr/local/lib
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+	1.	djpeg -grayscale -bmp ./testimg.jpg  > testimg.bmp
+
+	2.	check slash.bmp from host pc tool

@@ -1,0 +1,33 @@
+1. create project
+2. touch NEWS README ChangeLog AUTHORS
+3. autoscan
+4. Modify configure.scan then rename to configure.ac
+	a. rename
+		$ cp -a configure.scan configure.ac
+
+	b. 	add below to configure.ac
+		AC_INIT([helloworld], [0.1])
+		AM_INIT_AUTOMAKE(src/helloworld, 0.1)
+		AC_OUTPUT(Makefile)
+
+	c.	delete below form configure.ac
+		AC_CONFIG_FILES
+		
+5  create 
+	a:
+		$ touch Makefile.am
+		$ vim Makefile.am 
+			SUBDIRS=src
+	b:
+		$ touch src/Makefile.am
+		$ vim src/Makefile.am 
+			bin_PROGRAMS=helloworld
+			helloworld_SOURCES=sample_prog.c ctest1.c  ctest2.c
+			INCLUDES=-Iinc
+
+6. aclocal
+7. autoconf
+8. touch config.h.in; automake --add-missing
+9. automake
+10. ./configure
+11. make

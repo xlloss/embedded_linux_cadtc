@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>The Size Argument</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="img0.html"><img src="first.png" border=0 alt="First page"></a> <a href="img7.html"><img src="left.png" border=0 alt="Back"></a> <a href="img9.html"><img src="right.png" border=0 alt="Continue"></a> <a href="img20.html"><img src="last.png" border=0 alt="Last page"></a> <a href="3-1_Allocating_Memory.html"><img src="home.png" border=0 alt="Overview"></a> <a href="text8.html"><img src="text.png" border=0 alt="Text"></a></center><br>
+<center><img src="img8.png" alt=""></center>
+<p>
+1. Linux kernel 管理記憶體以 "Page (頁)" 為單位.<br>
+<br>
+2. 已 ARM 來說. 1 page = 4K. 每個 SOC 與系統會因為硬體設計的不同 page 的單位也會改變.<br>
+<br>
+3. 同常 kernel 預先會建立一個較大的 "記憶體池 (Memory pool)" 保留在系統. 經常分配的記憶體區塊, 會從這邊釋放出去.<br>
+<br>
+4. Memory pool 是用來解決記憶體破碎的問題.<br>
+<br>
+5. kmalloc API<br>
+&nbsp;&nbsp;&nbsp;&nbsp;最小 :&nbsp;32-byte or 64-byte 依照硬體設計和記憶體分配演算法決定.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;最大 :&nbsp;128K-byte <br>
+
+</p>
+</body>
+</html>

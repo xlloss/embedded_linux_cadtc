@@ -1,0 +1,17 @@
+#! /bin/sh
+#
+# Created by configure
+
+CC='arm-linux-gcc' \
+CXX='arm-linux-cpp' \
+'./configure' \
+'--host=arm-linux' \
+'--target=arm' \
+'--prefix=./install-arm' \
+'--disable-short-tags' \
+'--without-mysql' \
+'--without-pear' \
+'--disable-all' \
+'--disable-short-tags' \
+'--with-thttpd=../thttpd-2.21b' \
+"$@"

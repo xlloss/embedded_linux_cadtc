@@ -1,0 +1,10 @@
+
+
+&i2c2 {
+	status = "okay";
+	at24cxx@50 {
+		status = "okay";
+		compatible = "at24cxx";
+		reg = <0x50>;
+	};
+};

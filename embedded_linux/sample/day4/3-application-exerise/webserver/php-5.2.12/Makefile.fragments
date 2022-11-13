@@ -1,0 +1,96 @@
+cli: $(SAPI_CLI_PATH)
+
+$(SAPI_CLI_PATH): $(PHP_GLOBAL_OBJS) $(PHP_CLI_OBJS)
+	$(BUILD_CLI)
+
+install-cli: $(SAPI_CLI_PATH)
+	@echo "Installing PHP CLI binary:        $(INSTALL_ROOT)$(bindir)/"
+	@$(INSTALL_CLI)
+	@echo "Installing PHP CLI man page:      $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) sapi/cli/php.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)php$(program_suffix).1
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/ext/standard/var_unserializer.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/ext/standard/var_unserializer.re
+	@(cd $(top_srcdir); $(RE2C) -b -o ext/standard/var_unserializer.c ext/standard/var_unserializer.re)
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/ext/standard/url_scanner_ex.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/ext/standard/url_scanner_ex.re
+	@(cd $(top_srcdir); $(RE2C) -b -o ext/standard/url_scanner_ex.c	ext/standard/url_scanner_ex.re)
+
+ext/standard/info.lo: ext/standard/../../main/build-defs.h
+
+ext/standard/basic_functions.lo: $(top_srcdir)/Zend/zend_language_parser.h
+
+#
+# Build environment install
+#
+
+phpincludedir = $(includedir)/php
+phpbuilddir = $(libdir)/build
+
+BUILD_FILES = \
+	scripts/phpize.m4 \
+	build/mkdep.awk \
+	build/scan_makefile_in.awk \
+	build/libtool.m4 \
+	Makefile.global \
+	acinclude.m4 \
+	ltmain.sh \
+	run-tests.php
+
+BUILD_FILES_EXEC = \
+	build/shtool \
+	config.guess \
+	config.sub
+
+bin_SCRIPTS = phpize php-config
+man_PAGES = phpize php-config
+
+install-build:
+	@echo "Installing build environment:     $(INSTALL_ROOT)$(phpbuilddir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(phpbuilddir) $(INSTALL_ROOT)$(bindir) && \
+	(cd $(top_srcdir) && \
+	$(INSTALL) $(BUILD_FILES_EXEC) $(INSTALL_ROOT)$(phpbuilddir) && \
+	$(INSTALL_DATA) $(BUILD_FILES) $(INSTALL_ROOT)$(phpbuilddir))
+
+install-programs: scripts/phpize scripts/php-config
+	@echo "Installing helper programs:       $(INSTALL_ROOT)$(bindir)/"
+	@for prog in $(bin_SCRIPTS); do \
+		echo "  program: $(program_prefix)$${prog}$(program_suffix)"; \
+		$(INSTALL) -m 755 scripts/$${prog} $(INSTALL_ROOT)$(bindir)/$(program_prefix)$${prog}$(program_suffix); \
+	done
+	@echo "Installing man pages:             $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@for page in $(man_PAGES); do \
+		echo "  page: $(program_prefix)$${page}$(program_suffix).1"; \
+		$(INSTALL_DATA) scripts/man1/$${page}.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)$${page}$(program_suffix).1; \
+	done
+	
+scripts/phpize: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/scripts/phpize.in $(top_builddir)/config.status
+	(CONFIG_FILES=$@ CONFIG_HEADERS= $(top_builddir)/config.status)
+
+scripts/php-config: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/scripts/php-config.in $(top_builddir)/config.status
+	(CONFIG_FILES=$@ CONFIG_HEADERS= $(top_builddir)/config.status)
+
+#
+# Zend
+#
+
+Zend/zend_language_scanner.lo: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.h
+Zend/zend_ini_scanner.lo: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.h
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_scanner.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_scanner.l
+	@$(LEX) -Pzend -S/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/flex.skl -o$@ -i /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_scanner.l
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.h: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.c
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.y
+	@$(YACC) -p zend -v -d /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.y -o $@
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.h: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.c
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.y
+	@$(YACC) -p ini_ -v -d /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_parser.y -o $@
+
+/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_scanner.c: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_scanner.l
+	@$(LEX) -Pini_ -S/home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/flex.skl -o$@ -i /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_ini_scanner.l
+
+Zend/zend_indent.lo Zend/zend_highlight.lo Zend/zend_compile.lo: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_language_parser.h
+Zend/zend_execute.lo: /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_vm_execute.h /home/slash/work/tiny4412_src/tiny4412/experiment/day4/3-application-exerise/webserver/php-5.2.12/Zend/zend_vm_opcodes.h

@@ -1,0 +1,20 @@
+diff --git a/Day3/uboot_tiny4412/common/Makefile b/Day3/uboot_tiny4412/common/Makefile
+index bfa39d5..62d4d69 100644
+--- a/Day3/uboot_tiny4412/common/Makefile
++++ b/Day3/uboot_tiny4412/common/Makefile
+@@ -170,6 +170,7 @@ COBJS-$(CONFIG_LYNXKDI) += lynxkdi.o
+ COBJS-$(CONFIG_MODEM_SUPPORT) += modem.o
+ COBJS-$(CONFIG_UPDATE_TFTP) += update.o
+ COBJS-$(CONFIG_USB_KEYBOARD) += usb_kbd.o
++COBJS-$(CONFIG_HELLOWORLD) += cmd_helloworld.o
+ 
+ COBJS	:= $(sort $(COBJS-y))
+ XCOBJS	:= $(sort $(XCOBJS-y))
+@@ -177,6 +178,7 @@ SRCS	:= $(COBJS:.o=.c) $(XCOBJS:.o=.c)
+ OBJS	:= $(addprefix $(obj),$(COBJS))
+ XOBJS	:= $(addprefix $(obj),$(XCOBJS))
+ 
++
+ CPPFLAGS += -I..
+ 
+ all:	$(LIB) $(XOBJS)

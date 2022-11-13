@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 58</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="text0.html">First page</a> <a href="text56.html">Back</a> <a href="text58.html">Continue</a> <a href="text60.html">Last page</a> <a href="2-1_Char_Drivers.html">Overview</a> <a href="img57.html">Graphics</a></center><br>
+<h1>ProcFS Sample - 1</h1>
+<p>static int procfs_rw_init(void) </p>
+<p>{</p>
+<p>    int ret = 0;</p>
+<p>    proc_dir = proc_mkdir(PROC_DIR_NAME, NULL);</p>
+<p>    printk(KERN_ALERT &quot;Call Procfs init...\n&quot;);</p>
+<p>    proc_create(PROC_NAME, 666, proc_dir, <b>&amp;proc_ops</b>);</p>
+<p>out:</p>
+<p>    return ret;</p>
+<p>}</p>
+<p>struct file_operations proc_ops = {</p>
+<p>    .open = proc_open,</p>
+<p>    .release = proc_close,</p>
+<p>    .read  = proc_read,</p>
+<p>    .write  = proc_write,</p>
+<p>};</p>
+</body>
+</html>

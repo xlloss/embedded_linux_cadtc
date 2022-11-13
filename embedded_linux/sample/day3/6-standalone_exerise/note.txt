@@ -1,0 +1,21 @@
+1.	understand led_sample.c
+
+2.	add below to [ tiny4412/experiment/day3/uboot_tiny4412/examples/standalone/Makefile ]
+
+		a.	手動修改以下
+			+ELF-y        := led_sample
+
+		Or
+
+		b.	use "patch" 指令
+			1.	cd uboot_tiny4412
+			2.	patch -p1 [PATH]/6-standalone_exerise/examples_standalone_Makefile.patch
+
+3.	add led_sample.c
+
+		a.	手動修改
+			cp led_sample.c tiny4412/experiment/day3/uboot_tiny4412/examples/standalone [記得瞭解 Linux "cp" 指令]
+
+5.	re-build u-boot
+
+6.	update u-boot to eMMC

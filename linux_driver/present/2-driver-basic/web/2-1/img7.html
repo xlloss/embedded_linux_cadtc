@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+<head>
+  <meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=utf-8">
+  <title>Slide 8</title>
+</head>
+<body text="#000000" bgcolor="#F8F8F8" link="#DD4814" vlink="#3C3C3C" alink="#DD4814">
+<center>
+<a href="img0.html"><img src="first.png" border=0 alt="First page"></a> <a href="img6.html"><img src="left.png" border=0 alt="Back"></a> <a href="img8.html"><img src="right.png" border=0 alt="Continue"></a> <a href="img60.html"><img src="last.png" border=0 alt="Last page"></a> <a href="2-1_Char_Drivers.html"><img src="home.png" border=0 alt="Overview"></a> <a href="text7.html"><img src="text.png" border=0 alt="Text"></a></center><br>
+<center><img src="img7.png" alt=""></center>
+<p>
+
+1. 我們從 kernel source code 看到 Major/Minor number 在 kernel 裡的定義<br>
+<br>
+2. Major/Minor number 在驅動程式是非常重要的特性. 系統藉助這個特性來辨識各個不同的字元驅動程式<br>
+<br>
+3. kernel 會將 Major/Minor 變成一個變數. ==> MKDEV<br>
+<br>
+4. kernel 提供了一些巨集 (macro) 幫我們從 MKDEV 提取 Major/Minor<br>
+<br>
+<a href="https://elixir.bootlin.com/linux/v4.20.7/source/include/linux/kdev_t.h">https://elixir.bootlin.com/linux/v4.20.7/source/include/linux/kdev_t.h</a>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,43 @@
+a.
+	[ Host ]
+		1. cd /home/cadtc/tiny4412/experiment/day6/example_char_dev/led_driver
+		2. cp ./leds-tiny4412-char.c /home/cadtc/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/drivers/char/
+		3. cd /home/cadtc/tiny4412/experiment/tiny4412-kernel/linux_3.5.0_tiny4412/drivers/char/
+		4. geany Kconfig
+		
+		config SLASH_LED
+			tristate "My LED Support for Tiny4412 LED"
+		
+		
+		5. geany Makefile
+		
+		obj-$(CONFIG_SLASH_LED)	+= leds-tiny4412-char.o
+		
+		
+		6. 
+			a. # cd $(KERNEL_PATH)
+			b. # make menuconfig
+			c. # make modules
+			
+		7. cp -a drivers/char/leds-tiny4412-char.ko /home/cadtc/tiny4412/experiment/root_mkfs/lib/modules/3.5.0-FriendlyARM/kernel/drivers/char/
+		
+		[ Target ]
+		
+		8. depmod
+		
+		9. modprobe leds-tiny4412-char
+		
+		App
+		
+		1. cd /home/cadtc/tiny4412/experiment/day6/example_char_dev/example_app/leds
+		2. make 
+		3. sudo cp -a ./led /home/cadtc/tiny4412/experiment/root_mkfs
+
+	
+	
+		3.	# depmod -n
+			# depmod
+		
+		4.	# modprobe leds-tiny4412-char
+		
+		5.	# led

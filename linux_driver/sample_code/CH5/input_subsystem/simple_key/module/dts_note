@@ -1,0 +1,15 @@
+sample-simple-key {
+    status = "okay";
+    compatible = "sample,simple-key";
+    pinctrl-names = "default";
+    pinctrl-0 = <&key_0>;
+    key0-gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_LOW>;
+};
+
+&pinctrl {
+    btn {
+        key_0: key_0 {
+            rockchip,pins = <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
+        };
+    };
+};

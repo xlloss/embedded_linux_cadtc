@@ -1,0 +1,125 @@
+Introduction
+
+	thttpd (tiny/turbo/throttling HTTP server) is an open source software web server 
+	from ACME Laboratories, designed for simplicity, a small execution footprint and speed. 
+
+
+1. decompress php and thttpd on same level directory
+	$ cd  day4/3-application-exerise/webserver
+	$ tar jxvf php-5.2.12.tar.bz2
+	$ tar zxvf thttpd-2.21b.tar.gz
+
+
+2. Configure and compile PHP making it aware of thttpd -> to generate Makefile -> make -> make install
+
+	$ cd ./php-5.2.12/
+	$ export CC=arm-linux-gcc
+	$ export CXX=arm-linux-cpp
+	$ ./configure --host=arm-linux --target=arm --prefix=./install-arm --disable-short-tags --without-mysql --without-pear --disable-all --disable-short-tags --with-thttpd=../thttpd-2.21b
+
+                =======================================================================
+                Generating files
+                creating ./config.status
+                creating php5.spec
+                creating main/build-defs.h
+                creating scripts/phpize
+                creating scripts/man1/phpize.1
+                creating scripts/php-config
+                creating scripts/man1/php-config.1
+                creating sapi/cli/php.1
+                creating main/php_config.h
+                main/php_config.h is unchanged
+                creating main/internal_functions.c
+                creating main/internal_functions_cli.c
+                +--------------------------------------------------------------------+
+                | License:                                                           |
+                | This software is subject to the PHP License, available in this     |
+                | distribution in the file LICENSE.  By continuing this installation |
+                | process, you are bound by the terms of this license agreement.     |
+                | If you do not agree with the terms of this license, you must abort |
+                | the installation process at this point.                            |
+                +--------------------------------------------------------------------+
+
+                Thank you for using PHP.
+                ========================================================================
+
+	
+	$ make -j4
+	  ==============
+		Build complete.
+		Don't forget to run 'make test'.
+		==============
+
+	$ make install
+		==============================================================
+		Installing PHP SAPI module:       thttpd
+		Installing PHP CLI binary:        install-arm/bin/
+		Installing PHP CLI man page:      install-arm/man/man1/
+		Installing build environment:     install-arm/lib/php/build/
+		Installing header files:          install-arm/include/php/
+		Installing helper programs:       install-arm/bin/
+		program: phpize
+         	program: php-config
+                Installing man pages:             install-arm/man/man1/
+                page: phpize.1
+                page: php-config.1
+		===============================================================
+
+3. Configure and Compile thttpd -> to generate Makefile -> make
+ 
+	$ cd ../thttpd-2.21b
+	$ export CPP=arm-linux-cpp
+	$ ./configure --host=arm-linux --target=arm
+	$ make
+		================================================================
+		There should ELF executable file "thttpd" exist in the directory
+		Do not use make -j4, because Multithread maybe .................
+		===============================================================
+
+4 copy necessarry files/lib to Tiny4412
+
+		copy php to Tiny4412
+		$ cd ../php-5.2.12/install-arm/
+		$ cp -rf ./bin/* /home/cadtc/tiny4412/experiment/root_mkfs/usr/local/bin
+			cp -rf ./lib/ /home/cadtc/tiny4412/experiment/root_mkfs/usr/local/
+			
+
+    create thttpd.conf in Tiny4412
+    $ cd ../thttpd-2.21b
+    $ cp thttpd  /home/cadtc/tiny4412/experiment/root_mkfs/usr/local/bin
+
+5 create thttpd.conf in /home/cadtc/tiny4412/experiment/root_mkfs/etc
+
+	$ sudo geany  /home/cadtc/tiny4412/experiment/root_mkfs/etc/thttpd.conf
+
+	(Sample thttpd.conf)
+
+		#Configuration file for thttpd
+		port=80
+		dir=/
+		logfile=/var/log/thttpd.log
+
+6 execute thttpd on Tiny4412
+
+	$ thttpd -C /etc/thttpd.conf
+
+7 check thttpd_server with browser in PC site
+
+	http://192.168.0.20
+
+
+you can reference some php command from here
+http://www.php.net/manual/en/function.shell-exec.php
+
+
+-----------------------------------------------------------------------------------
+
+Modify ERROR
+
+htpasswd.c:51: error: conflicting types for 'getline'
+
+sudo geany extras/htpasswd.c Line:51
+
+change "getline" to "mygetline"
+
+

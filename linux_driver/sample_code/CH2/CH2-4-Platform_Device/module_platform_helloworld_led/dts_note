@@ -1,0 +1,15 @@
+platdrvsample:platdrvsample {
+	status = "okay";
+	compatible = "sample-test,platform-driver";
+	pinctrl-0 = <&led_0>;
+	led0-gpios = <&gpio2 RK_PB3 GPIO_ACTIVE_HIGH>;
+};
+
+
+&pinctrl {
+	led {
+		led_0: led_0 {
+			rockchip,pins = <2 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};

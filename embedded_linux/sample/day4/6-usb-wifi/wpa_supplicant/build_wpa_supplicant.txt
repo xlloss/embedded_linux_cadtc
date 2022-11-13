@@ -1,0 +1,96 @@
+-------------------------------------------------------
+Netlink Protocol Library Suite
+-------------------------------------------------------
+iw requires the Netlink Protocol Library Suite (libnl)
+
+Download, cross compile and install the Netlink Protocol libraries:
+
+1. # wget http://www.infradead.org/~tgr/libnl/files/libnl-3.2.24.tar.gz
+
+2. # tar -xzf libnl-3.2.24.tar.gz
+
+3. # cd libnl-3.2.24 && mkdir install
+
+4. #	export CC=arm-none-linux-gnueabi-gcc
+			export CPP=arm-none-linux-gnueabi-cpp
+			./configure --host=arm-none-linux-gnueabi --prefix=/home/cadtc/tiny4412/experiment/day4/5-usb-wifi/wpa_supplicant/libnl-3.2.24/install
+
+5. # make && make install
+
+
+-------------------------------------------------------
+OpenSSL
+OpenSSL is a library for Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1).
+-------------------------------------------------------
+
+Download, build and install OpenSSL:
+
+1. # wget https://www.openssl.org/source/openssl-1.0.1h.tar.gz
+2. # tar -xzf openssl-1.0.1h.tar.gz
+3. # cd openssl-1.0.1h && mkdir install
+4. # export ARCH=arm
+5. # export CROSS_COMPILE=arm-none-linux-gnueabi-
+6. # ./Configure linux-generic32 --prefix=/home/cadtc/tiny4412/experiment/day4/5-usb-wifi/wpa_supplicant/openssl-1.0.1h/install
+7. # make && make install
+
+
+-------------------------------------------------------
+wpa_supplicant
+-------------------------------------------------------
+
+With all the prerequisites installed, finally download, build and install the wpa_supplicant:
+
+1. # wget http://hostap.epitest.fi/releases/wpa_supplicant-2.2.tar.gz
+2. # tar -xzf wpa_supplicant-2.2.tar.gz
+3. # cd wpa_supplicant-2.2/wpa_supplicant && mkdir install
+4. # cp defconfig .config
+
+
+								modify .config file
+
+***************** modify .config file ********************
+15,16c15,17
+_ #CFLAGS += -I/usr/local/openssl/include
+_ #LIBS += -L/usr/local/openssl/lib
+------------------------------------------------------------
++ CFLAGS += -I../../openssl-1.0.1h/install/include/
++ LIBS += -L../../openssl-1.0.1h/install/lib/
+ 
+40,41c41,42
+_ #CFLAGS += -I$<path to libnl include files>
+_ #LIBS += -L$<path to libnl library files>
+------------------------------------------------------------
++ CFLAGS += -I../../libnl-1.1.4/install/include/libnl3
++ LIBS += -L../../libnl-1.1.4/install/lib
+********************************************************
+
+5. # make CC=arm-none-linux-gnueabi-gcc
+6. # make install DESTDIR=/home/cadtc/tiny4412/experiment/day4/5-usb-wifi/wpa_supplicant/wpa_supplicant-2.2/wpa_supplicant/install
+
+-------------------------------------------------------
+Copy File
+-------------------------------------------------------
+sudo cp ./install/usr/local/sbin/wpa_supplicant /home/cadtc/tiny4412/experiment/root_mkfs/sbin
+
+-------------------------------------------------------
+Setting File
+-------------------------------------------------------
+gedit wpa_supplicant.conf
+
+network={
+ssid="essid"
+proto=WPA RSN
+key_mgmt=WPA-PSK WPA-EAP
+pairwise=CCMP
+group=CCMP
+psk="password"
+}
+
+sudo cp wpa_supplicant.conf /home/cadtc/tiny4412/experiment/root_mkfs/etc
+
+-------------------------------------------------------
+TEST
+-------------------------------------------------------
+wpa_supplicant -B -iwlan0 -c /etc/wpa_supplicant.conf
+udhcpc -i wlan0
+

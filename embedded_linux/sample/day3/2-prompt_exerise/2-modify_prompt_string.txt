@@ -1,0 +1,5 @@
+1.	uboot_tiny4412/include/configs/tiny4412.h
+
+2.	search keyword "CONFIG_SYS_PROMPT"
+
+3.	rebuild u-boot and update to eMMC

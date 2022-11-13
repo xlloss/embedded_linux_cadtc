@@ -1,0 +1,31 @@
+WPA/WPA2 - Device
+    $ iw dev
+    $ ls /sys/class/net
+
+    $ iw wlan0 scan
+    $ wpa_passphrase SSID > /etc/wpa_supplicant.conf
+
+
+      ctrl_interface=/var/run/wpa_supplicant
+      update_config=1
+      ap_scan=1
+
+      network={
+   	    ssid="ssid"
+	    #psk="testtest"
+	    psk="password"
+      }
+
+WPA/WPA2 - Connect
+    $ wpa_supplicant -B -D wext -i wlan0 -c /etc/wpa_supplicant.conf 
+
+WPA/WPA2 - DHCP
+    $ udhcpc -i wlan0 
+
+WPA/WPA2 - IP
+    $ ifconfig wlan0 
+
+WPA/WPA2 - Ping
+    $ Ping 8.8.8.8 (Google)
+
+

@@ -1,0 +1,39 @@
+[ Host ]
+
+1.	Setting build module
+	# cd /home/xlloss/tiny4412/Day4/linux_3.5.0_tiny4412
+	# make menuconfig
+		Device Drivers  --->
+			Character devices  --->
+				<M> Tiny4412 module sample
+
+2.	build module
+	# cd /home/xlloss/tiny4412/Day4/linux_3.5.0_tiny4412
+	# make modules
+
+3.	set install path
+	# make help | grep modules_install
+	# export INSTALL_MOD_PATH=../
+	# make modules_install
+	# ls ../lib
+
+4	Copy module to roofs
+	# sudo cp -a  ../lib/modules/ ~/tiny4412/Day1/root_mkfs/lib/
+
+
+[ Target ]
+
+5.	# ls lib/modules/3.5.0-FriendlyARM/kernel/drivers/char/
+
+6.	# insmod  lib/modules/3.5.0-FriendlyARM/kernel/drivers/char/tiny4412_hello_module.ko
+	# lsmod
+
+7.	#rmmod  tiny4412_hello_module
+	# lsmod
+
+
+8.	# modprobe tiny4412_hello_module
+	# lsmod
+
+9.	#modprobe -r tiny4412_hello_module
+	# lsmod

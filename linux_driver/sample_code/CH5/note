@@ -1,0 +1,16 @@
+1. 	DRM
+	rockchip-rk3399-nanopi-m4/drivers/gpu/drm/
+	rockchip-rk3399-nanopi-m4/drivers/gpu/drm/rockchip
+
+2.	GPIO
+	rockchip-rk3399-nanopi-m4/drivers/gpio
+	rockchip-rk3399-nanopi-m4/drivers/gpio/gpio-rk8xx.c
+
+3.	I2C
+	rockchip-rk3399-nanopi-m4/drivers/i2c/
+	rockchip-rk3399-nanopi-m4/drivers/i2c/i2c-rk3x.c
+
+4.	INPUT
+	rockchip-rk3399-nanopi-m4/drivers/input
+	rockchip-rk3399-nanopi-m4/drivers/input/keyboard/
+	rockchip-rk3399-nanopi-m4/drivers/input/touch
