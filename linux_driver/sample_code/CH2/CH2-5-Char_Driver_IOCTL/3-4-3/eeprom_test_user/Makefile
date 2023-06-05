@@ -1,7 +1,7 @@
-CFLAGS				= -Wall -O2 -static
-CC				= $(CROSS_COMPILE)gcc
-INSTALL				= install
-TARGET				= $(eeprom_i2c_test)
+CFLAGS		= -Wall -O2 -static
+CC			= $(CROSS_COMPILE)gcc
+INSTALL		= install
+TARGET		= $(eeprom_i2c_test)
 
 
 eeprom_i2c_test: eeprog.o 24cXX.o

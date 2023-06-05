@@ -3,16 +3,12 @@ led-ioctl {
 	compatible = "tasklet_gpio,workqueue-sample";
 
 	pinctrl-names = "default";
-	pinctrl-0 = <&led_0 &led_1 &led_2 &led_3 &key_0 &key_1 &key_2 &key_3>;
+	pinctrl-0 = <&led_0 &led_1 &key_0 &key_1>;
 	led0-gpios = <&gpio1 RK_PA0 GPIO_ACTIVE_LOW>;
 	led1-gpios = <&gpio1 RK_PA1 GPIO_ACTIVE_LOW>;
-	led2-gpios = <&gpio1 RK_PA3 GPIO_ACTIVE_LOW>;
-	led3-gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_LOW>;
 
-	key0-gpios = <&gpio4 RK_PC0 GPIO_ACTIVE_LOW>;
-	key1-gpios = <&gpio4 RK_PC1 GPIO_ACTIVE_LOW>;
-	key2-gpios = <&gpio1 RK_PC2 GPIO_ACTIVE_LOW>;
-	key3-gpios = <&gpio1 RK_PC6 GPIO_ACTIVE_LOW>;
+	key0-gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_LOW>;
+	key1-gpios = <&gpio4 RK_PD2 GPIO_ACTIVE_LOW>;
 };
 
 &pinctrl {
@@ -23,12 +19,6 @@ led-ioctl {
 		led_1: led_1 {
 			rockchip,pins = <1 RK_PA1 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
-		led_2: led_2 {
-			rockchip,pins = <1 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-		led_3: led_3 {
-			rockchip,pins = <1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
 	};
 
 	btn {
@@ -37,12 +27,6 @@ led-ioctl {
 		};
 		key_1: key_1 {
 			rockchip,pins = <4 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-		key_2: key_2 {
-			rockchip,pins = <1 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-		key_3: key_3 {
-			rockchip,pins = <1 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 };

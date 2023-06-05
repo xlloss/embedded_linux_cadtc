@@ -30,15 +30,15 @@ static inline __s32 i2c_smbus_access(int file, char read_write, __u8 command,
                                      int size, union i2c_smbus_data *data)
 {
 	struct i2c_smbus_ioctl_data args;
+	int ret;
 
 	args.read_write = read_write;
 	args.command = command;
 	args.size = size;
 	args.data = data;
 
-	printf("%s %d file %d\r\n", __func__, __LINE__, file);
-
-	return ioctl(file, I2C_SMBUS, &args);
+	ret = ioctl(file, I2C_SMBUS, &args);
+	return ret;
 }
 
 static inline __s32 i2c_smbus_read_byte(int file)
@@ -132,8 +132,8 @@ static int i2c_write_1b(struct eeprom *e, __u8 buf)
 {
 	int r;
 	/*
-     * we must simulate a plain I2C byte write with SMBus functions
-     */
+	 * we must simulate a plain I2C byte write with SMBus functions
+	 */
 	r = i2c_smbus_write_byte(e->fd, buf);
 	if(r < 0)
 		fprintf(stderr, "Error i2c_write_1b: %s\n", strerror(errno));
@@ -146,8 +146,8 @@ static int i2c_write_2b(struct eeprom *e, __u8 buf[2])
 {
 	int r;
 	/*
-     * we must simulate a plain I2C byte write with SMBus functions
-     */
+	 * we must simulate a plain I2C byte write with SMBus functions
+	 */
 	r = i2c_smbus_write_byte_data(e->fd, buf[0], buf[1]);
 	if(r < 0)
 		fprintf(stderr, "Error i2c_write_2b: %s\n", strerror(errno));
@@ -163,7 +163,7 @@ static int i2c_write_3b(struct eeprom *e, __u8 buf[3])
 	/*
      * we must simulate a plain I2C byte write with SMBus functions
 	 * the __u16 data field will be byte swapped by the SMBus protocol
-     */
+	 */
 	r = i2c_smbus_write_word_data(e->fd, buf[0], buf[2] << 8 | buf[1]);
 	if(r < 0)
 		fprintf(stderr, "Error i2c_write_3b: %s\n", strerror(errno));
@@ -205,7 +205,6 @@ int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom* e)
 	CHECK_I2C_FUNC( funcs, I2C_FUNC_SMBUS_WRITE_WORD_DATA );
 
 	// set working device
-	printf ("%s %d slave addr 0x%x\n", __func__, __LINE__, addr);
 	if((r = ioctl (fd, I2C_SLAVE, addr)) < 0) {
 		fprintf(stderr, "Error eeprom_open: %s\n", strerror(errno));
 		return -1;
@@ -227,32 +226,30 @@ int eeprom_close(struct eeprom *e)
 	return 0;
 }
 
-//int eeprom_read_current_byte(struct eeprom* e)
-//{
-//    // clear kernel read buffer
-//	ioctl(e->fd, BLKFLSBUF);
-//	return i2c_smbus_read_byte(e->fd);
-//}
+int eeprom_read_current_byte(struct eeprom* e)
+{
+    // clear kernel read buffer
+	ioctl(e->fd, BLKFLSBUF);
+	return i2c_smbus_read_byte(e->fd);
+}
 
 int eeprom_read_byte(struct eeprom* e, __u16 mem_addr)
 {
 	int r;
-    __u8 wb1b_buf;
-    __u8 wb2b_buf[2];
+	__u8 wb1b_buf;
+	__u8 wb2b_buf[2];
 
 	ioctl(e->fd, BLKFLSBUF); // clear kernel read buffer
 
-    if ((e->type != EEPROM_TYPE_8BIT_ADDR) &&
-        (e->type != EEPROM_TYPE_16BIT_ADDR)) {
+	if ((e->type != EEPROM_TYPE_8BIT_ADDR) &&
+		(e->type != EEPROM_TYPE_16BIT_ADDR)) {
 		fprintf(stderr, "ERR: unknown eeprom type\n");
 		return -1;
-    }
+	}
 	if (e->type == EEPROM_TYPE_8BIT_ADDR) {
-		printf("%s %d\r\n", __func__, __LINE__);
 		wb1b_buf =  mem_addr & 0xff;
 		r = i2c_write_1b(e, wb1b_buf);
 	} else {
-		printf("%s %d\r\n", __func__, __LINE__);
 		wb2b_buf[0] = (mem_addr >> 8) & 0xff;
 		wb2b_buf[1] = mem_addr & 0xff;
 		r = i2c_write_2b(e, wb2b_buf);
@@ -267,23 +264,23 @@ int eeprom_read_byte(struct eeprom* e, __u16 mem_addr)
 
 int eeprom_write_byte(struct eeprom *e, __u16 mem_addr, __u8 data)
 {
-    __u8 w2b_buf[2];
-    __u8 w3b_buf[3];
+	__u8 w2b_buf[2];
+	__u8 w3b_buf[3];
 
-    if (e->type != EEPROM_TYPE_8BIT_ADDR &&
-        e->type != EEPROM_TYPE_16BIT_ADDR) {
+	if (e->type != EEPROM_TYPE_8BIT_ADDR &&
+		e->type != EEPROM_TYPE_16BIT_ADDR) {
 		fprintf(stderr, "ERR: unknown eeprom type\n");
 		return -1;
-    }
+	}
 
 	if(e->type == EEPROM_TYPE_8BIT_ADDR) {
         w2b_buf[0] = mem_addr & 0xff;
         w2b_buf[1] = data;
 		return i2c_write_2b(e, w2b_buf);
 	} else {
-        w3b_buf[0] = (mem_addr >> 8) & 0xff;
-        w3b_buf[1] = mem_addr & 0xff;
-        w3b_buf[2] = data;
+		w3b_buf[0] = (mem_addr >> 8) & 0xff;
+		w3b_buf[1] = mem_addr & 0xff;
+		w3b_buf[2] = data;
 		return i2c_write_3b(e, w3b_buf);
 	}
 }

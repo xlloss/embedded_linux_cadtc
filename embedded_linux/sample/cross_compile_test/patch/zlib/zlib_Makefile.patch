@@ -1,0 +1,11 @@
+--- Makefile	2023-05-01 11:01:29.679741782 +0800
++++ /tmp/zlib/Makefile	2023-05-01 11:01:24.783723623 +0800
+@@ -33,7 +33,7 @@
+ SHAREDLIBV=libz.so.1.2.3
+ SHAREDLIBM=libz.so.1
+ 
+-AR=aarch64-linux-gnu-ar
++AR=aarch64-linux-gnu-ar rc
+ RANLIB=aarch64-linux-gnu-ranlib
+ TAR=tar
+ SHELL=/bin/sh

@@ -15,12 +15,12 @@
 #include <sys/types.h>
 
 
-#define TEST_KEY_CODE KEY_BLUE
-//#define TEST_KEY_CODE BTN_0
+//#define TEST_KEY_CODE KEY_BLUE
+#define TEST_KEY_CODE BTN_0
 
 int main(void)
 {
-    char *filename="/dev/input/event2";
+    char *filename="/dev/input/event1";
     struct input_event ev;
     int fd, code;
 
@@ -34,8 +34,8 @@ int main(void)
     while (1) {
         if (read(fd, &ev, sizeof(struct input_event)) < 0) {
             fprintf(stderr,
-				"failed to read input event from input device %s: %s\n",
-				filename, strerror(errno));
+		"failed to read input event from input device %s: %s\n",
+		filename, strerror(errno));
         }
 
         if (ev.type == EV_KEY) {

@@ -1,2 +1,0 @@
-!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
-obj-m	/home/slash/work/for_cadtc/src/embedded_linux/linux_driver/sample_code/CH1/CH1-3-Install_Linux_Modules/1-4-1-hello/Makefile	/^obj-m := hello_world_v3.o$/;"	m	language:Make

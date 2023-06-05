@@ -32,14 +32,14 @@
 #define DEVICE_NAME "irqs"
 #define DRIVER_NAME "tasklet_gpio-irqs"
 
-#define GPIO_KEY 4
-#define GPIO_LED 4
+#define GPIO_KEY 2
+#define GPIO_LED 2
 
 struct irq_gpio {
 	int irq[GPIO_KEY];
 	struct gpio_desc *key_gpiod[GPIO_KEY];
     struct tasklet_struct tasklet;
-    unsigned char irq_trig; 
+    unsigned char irq_trig;
 	int led[GPIO_LED];
 	struct gpio_desc *led_gpiod[GPIO_LED];
 
@@ -135,7 +135,7 @@ static int tasklet_gpio_irq_probe(struct platform_device *pdev)
 
 	}
 
-    tasklet_init(&irq_gpio.tasklet, t_tasklet, (unsigned long)&irq_gpio);
+	tasklet_init(&irq_gpio.tasklet, t_tasklet, (unsigned long)&irq_gpio);
 
 	ret = misc_register(&tasklet_gpio_irq_dev);
 	if (ret) {

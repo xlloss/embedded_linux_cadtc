@@ -3,7 +3,7 @@
 #include <linux/jiffies.h>
 #include <linux/delay.h>
 
-static int jiffies_test_init(void) 
+static int jiffies_test_init(void)
 {
 	struct timeval time_val;
 	struct timespec time_spec;
@@ -13,7 +13,7 @@ static int jiffies_test_init(void)
 	before = (unsigned long)jiffies;
     printk("Before jiffies = [%ld]\n", before);
 
-	while (time_before(jiffies, before + HZ))
+	while (time_before(jiffies, before + (HZ * 2)))
 	//while (time_before(jiffies, before + msecs_to_jiffies(1000)))
 	//msleep(1000);
 	//mdelay(1000);
@@ -30,14 +30,14 @@ static int jiffies_test_init(void)
 	printk("Elapsed time = [%lu]sec [%lu]nsec\n", time_spec.tv_sec, time_spec.tv_nsec);
 
 	return 0;
-} 
+}
 
-static void jiffies_test_exit(void) 
+static void jiffies_test_exit(void)
 {
-	printk("%s driver removed...\n", __func__); 
-} 
+	printk("%s driver removed...\n", __func__);
+}
 
-module_init(jiffies_test_init); 
+module_init(jiffies_test_init);
 module_exit(jiffies_test_exit);
 
-MODULE_LICENSE("GPL"); 
+MODULE_LICENSE("GPL");

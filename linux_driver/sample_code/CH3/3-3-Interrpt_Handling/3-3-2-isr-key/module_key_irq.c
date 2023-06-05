@@ -65,6 +65,8 @@ static int gpiokey_irq_probe(struct platform_device *pdev)
 	int ret, i;
 	char dt_gpio_name[15];
 
+	dev_info(&pdev->dev, "%s IRQ Sample V2", __func__);
+
 	for (i = 0; i < GPIO_NUM; i++) {
 		irq_gpio.irq[i] = 0;
 		sprintf(dt_gpio_name, "key%d", i);

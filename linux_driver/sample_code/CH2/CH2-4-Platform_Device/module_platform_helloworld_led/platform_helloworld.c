@@ -92,22 +92,22 @@ static struct platform_driver helloworld_platform_driver = {
 
 static int __init helloworld_dev_init(void)
 {
-    int ret;
+	int ret;
 
-    ret = platform_driver_register(&helloworld_platform_driver);
-    if (ret) {
-        pr_err("%s platform_driver_register fail\r\n", __func__);
-        return ret;
-    }
+	ret = platform_driver_register(&helloworld_platform_driver);
+	if (ret) {
+		pr_err("%s platform_driver_register fail\r\n", __func__);
+		return ret;
+	}
 
-    pr_info("%s initialized\n", __func__);
+	pr_info("%s initialized\n", __func__);
 
-    return ret;
+	return ret;
 }
 
 static void __exit helloworld_dev_exit(void)
 {
-    platform_driver_unregister(&helloworld_platform_driver);
+	platform_driver_unregister(&helloworld_platform_driver);
 }
 
 module_init(helloworld_dev_init);
