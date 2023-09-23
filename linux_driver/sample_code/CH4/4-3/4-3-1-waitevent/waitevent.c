@@ -1,4 +1,4 @@
-/* 
+/*
  * Copy from Terence
  *
  * This program is free software; you can redistribute it and/or modify
@@ -33,13 +33,15 @@ static bool flag = 0;
 
 ssize_t waitevent_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	printk("[%s] process %i (%s) going to sleep\n", __func__,
+    int ret;
+    printk("[%s] process %i (%s) going to sleep\n", __func__,
         current->pid, current->comm);
 
-    wait_event_interruptible(wq, flag); // step 2
-	//wait_event_interruptible_exclusive(wq, flag != 0);
-    //wait_event_timeout(wq, flag != 0, 10 * HZ);
+    //wait_event_interruptible(wq, flag); // step 2
+    //wait_event_interruptible_exclusive(wq, flag != 0);
+    ret = wait_event_timeout(wq, flag == 1, 3 * HZ);
 
+    printk("[%s] wait_event_timeout ret=%d\n", __func__, ret);
     printk("[%s] awoken %i (%s)\n", __func__, current->pid, current->comm);
     return 0;
 }
@@ -50,10 +52,10 @@ ssize_t waitevent_write(struct file *filp, const char __user *buf, size_t count,
         __func__, current->pid, current->comm);
 
     flag = 1;
-    wake_up(&wq); // step 3
+    //wake_up(&wq); // step 3
     //wake_up_interruptible(&wq); // step 3
 	//wake_up_interruptible_all(&wq);
-	flag = 0;
+	//flag = 0;
 
     return count;
 }

@@ -30,7 +30,7 @@
 
 
 #define DEVICE_NAME "irqs"
-#define DRIVER_NAME "tiny4412-irqs"
+#define DRIVER_NAME "rockpi4b-irqs"
 
 #define GPIO_KEY 4
 #define GPIO_LED 4
@@ -38,8 +38,8 @@
 struct irq_gpio {
 	int irq[GPIO_KEY];
 	struct gpio_desc *key_gpiod[GPIO_KEY];
-    struct work_struct workq;
-    unsigned char irq_trig; 
+	struct work_struct workq;
+	unsigned char irq_trig;
 	int led[GPIO_LED];
 	struct gpio_desc *led_gpiod[GPIO_LED];
 
@@ -47,47 +47,47 @@ struct irq_gpio {
 
 struct irq_gpio irq_gpio;
 
-static struct file_operations tiny4412_irq_dev_fops = {
+static struct file_operations rockpi4b_irq_dev_fops = {
 	.owner			= THIS_MODULE,
 };
 
-static struct miscdevice tiny4412_irq_dev = {
+static struct miscdevice rockpi4b_irq_dev = {
 	.minor			= MISC_DYNAMIC_MINOR,
 	.name			= DEVICE_NAME,
-	.fops			= &tiny4412_irq_dev_fops,
+	.fops			= &rockpi4b_irq_dev_fops,
 };
 
 void sam_workqueue(struct work_struct *work)
 {
-    int i;
+	int i;
 
-    pr_err("%s IRQ_TRIG %d\r\n", __func__, irq_gpio.irq_trig);
+	pr_err("%s IRQ_TRIG %d\r\n", __func__, irq_gpio.irq_trig);
 
-    for (i = 0; i < GPIO_LED; i++) {
-        if (irq_gpio.irq[i] == irq_gpio.irq_trig)
-            break;
-    }
+	for (i = 0; i < GPIO_LED; i++) {
+		if (irq_gpio.irq[i] == irq_gpio.irq_trig)
+			break;
+	}
 
-    pr_err("%s i -> %d\r\n", __func__, i);
+	pr_info("%s i -> %d\r\n", __func__, i);
 
-    gpiod_set_value(irq_gpio.led_gpiod[i], 0);
-    msleep(500);  /* sleep */
-    gpiod_set_value(irq_gpio.led_gpiod[i], 1);
+	gpiod_set_value(irq_gpio.led_gpiod[i], 0);
+	msleep(500);  /* sleep */
+	gpiod_set_value(irq_gpio.led_gpiod[i], 1);
 }
 
 static irqreturn_t gpio_irq_isr(int irq, void *devid)
 {
     struct irq_gpio *pirq_gpio;
 
-    pirq_gpio = (struct irq_gpio *)devid;
-    pirq_gpio->irq_trig = irq;
+	pirq_gpio = (struct irq_gpio *)devid;
+	pirq_gpio->irq_trig = irq;
 	pr_err("IRQ %d\r\n", irq);
-    schedule_work(&pirq_gpio->workq);
+	schedule_work(&pirq_gpio->workq);
 
 	return 0;
 }
 
-static int tiny4412_irq_probe(struct platform_device *pdev)
+static int rockpi4b_irq_probe(struct platform_device *pdev)
 {
 	int ret, i;
 	char dt_gpio_key_name[15];
@@ -129,9 +129,9 @@ static int tiny4412_irq_probe(struct platform_device *pdev)
 
 	}
 
-    INIT_WORK(&irq_gpio.workq, sam_workqueue);
+	INIT_WORK(&irq_gpio.workq, sam_workqueue);
 
-	ret = misc_register(&tiny4412_irq_dev);
+	ret = misc_register(&rockpi4b_irq_dev);
 	if (ret) {
 		dev_err(&pdev->dev, "misc_register fail\r\n");
 		return ret;
@@ -153,7 +153,7 @@ gpio_error:
 	return ret;
 }
 
-static int tiny4412_irq_remove(struct platform_device *pdev)
+static int rockpi4b_irq_remove(struct platform_device *pdev)
 {
 	int i;
 
@@ -164,36 +164,36 @@ static int tiny4412_irq_remove(struct platform_device *pdev)
 	}
 
     flush_scheduled_work();
-	misc_deregister(&tiny4412_irq_dev);
+	misc_deregister(&rockpi4b_irq_dev);
 
 	return 0;
 }
 
 #ifdef CONFIG_OF
 /* Match table for device tree binding */
-static const struct of_device_id tiny4412_irq_of_match[] = {
-	{ .compatible = "tiny4412,workqueue-sample", .data = NULL},
+static const struct of_device_id rockpi4b_irq_of_match[] = {
+	{ .compatible = "rockpi4b,workqueue-sample", .data = NULL},
 	{},
 };
-MODULE_DEVICE_TABLE(of, tiny4412_irq_of_match);
+MODULE_DEVICE_TABLE(of, rockpi4b_irq_of_match);
 #else
-#define tiny4412_irq_of_match NULL
+#define rockpi4b_irq_of_match NULL
 #endif
 
-static struct platform_driver tiny4412_irq_platform_driver = {
-	.probe = tiny4412_irq_probe,
-	.remove = tiny4412_irq_remove,
+static struct platform_driver rockpi4b_irq_platform_driver = {
+	.probe = rockpi4b_irq_probe,
+	.remove = rockpi4b_irq_remove,
 	.driver = {
 		.name = DRIVER_NAME,
-		.of_match_table = tiny4412_irq_of_match,
+		.of_match_table = rockpi4b_irq_of_match,
 	},
 };
 
-static int __init tiny4412_irq_dev_init(void)
+static int __init rockpi4b_irq_dev_init(void)
 {
 	int ret;
 
-	ret = platform_driver_register(&tiny4412_irq_platform_driver);
+	ret = platform_driver_register(&rockpi4b_irq_platform_driver);
 	if (ret) {
 		pr_err("%s platform_driver_register fail\r\n", __func__);
 		return ret;
@@ -204,14 +204,14 @@ static int __init tiny4412_irq_dev_init(void)
 	return ret;
 }
 
-static void __exit tiny4412_irq_dev_exit(void)
+static void __exit rockpi4b_irq_dev_exit(void)
 {
-	platform_driver_unregister(&tiny4412_irq_platform_driver);
+	platform_driver_unregister(&rockpi4b_irq_platform_driver);
 }
 
-module_init(tiny4412_irq_dev_init);
-module_exit(tiny4412_irq_dev_exit);
+module_init(rockpi4b_irq_dev_init);
+module_exit(rockpi4b_irq_dev_exit);
 
 MODULE_AUTHOR("Slash <slash.linux.c@gmail.com>");
-MODULE_DESCRIPTION("Tiny4412 GPIO-IRQ Driver");
+MODULE_DESCRIPTION("rockpi4b GPIO-IRQ Driver");
 MODULE_LICENSE("GPL");

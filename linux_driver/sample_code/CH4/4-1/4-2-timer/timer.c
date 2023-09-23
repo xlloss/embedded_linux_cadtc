@@ -29,37 +29,38 @@ unsigned int *my_data;
 
 static void timer_timeout(unsigned long data)
 {
-    unsigned int my_data = (unsigned int)data;
+	unsigned int my_data = (unsigned int)data;
 
-    pr_info("%s my_data = %d\n", __func__, my_data);
-    /*
-     * can not go to sleep
-     */
-    //msleep(1000);
+	pr_info("%s my_data = %d\n", __func__, my_data);
+	/*
+	 * can not go to sleep
+	 */
+
+	/* msleep(1000); */
 }
 
 static int timer_init(void)
 {
-    my_data = kmalloc(sizeof(unsigned int) * 1, GFP_KERNEL);
-    pr_info("%s driver loaded...\n", __func__);
+	my_data = kmalloc(sizeof(unsigned int) * 1, GFP_KERNEL);
+	pr_info("%s driver loaded...\n", __func__);
 
-    *my_data = 10;
-    timerfn.expires = jiffies + TIMEOUT_VALUE;
-    timerfn.function = timer_timeout;
-    timerfn.data = *my_data;
+	*my_data = 10;
+	timerfn.expires = jiffies + TIMEOUT_VALUE;
+	timerfn.function = timer_timeout;
+	timerfn.data = *my_data;
 
-    add_timer(&timerfn);
+	add_timer(&timerfn);
 
-    return 0;
+	return 0;
 }
 
 static void timer_exit(void)
 {
-    int ret;
+	int ret;
 
-    pr_info("%s driver removed...\n", __func__);
-    ret = del_timer_sync(&timerfn);
-    kfree(my_data);
+	pr_info("%s driver removed...\n", __func__);
+	ret = del_timer_sync(&timerfn);
+	kfree(my_data);
 }
 
 module_init(timer_init);
