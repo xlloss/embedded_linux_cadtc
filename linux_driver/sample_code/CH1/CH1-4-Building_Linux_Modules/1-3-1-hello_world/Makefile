@@ -1,4 +1,4 @@
-KERNELDIR = /home/slash/for_cadtc/rockpi4-b/rockpi-kernel
+#KERNELDIR = /home/slash/for_cadtc/rockpi4-b/rockpi-kernel
 #INSTALLDIR =
 
 obj-m := hello_world.o

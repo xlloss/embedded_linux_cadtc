@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOCKER_WORKDIR="/home/cadtc/host_share_folder"
-DOCKER_CONTER_NAME="cadtc-rockpi4b-20220814"
+DOCKER_CONTER_NAME="cadtc-rockpi4b"
 DOCKER_LOGIN_ID="cadtc"
 #DOCKER_LOGIN_ID="root"
 
@@ -20,7 +20,8 @@ docker run --name ${DOCKER_CONTER_NAME} \
 	-e DISPLAY \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v ${HOST_SHARE_FOLDER}:${DOCKER_WORKDIR} \
-	-it --net=host \
+	-v /dev:/dev \
+	-it --net=host --privileged \
 	-u ${DOCKER_LOGIN_ID} \
 	--hostname ${DOCKER_CONTER_NAME} \
 	-w ${DOCKER_WORKDIR} ${DOCKER_IMAGE_ID} /bin/bash
